@@ -1,0 +1,12 @@
+import type { ApplicationStatus } from '~/types';
+import { APPLICATION_STATUS } from '~/constants';
+
+export const applicationStatuses: ApplicationStatus[] = [
+    APPLICATION_STATUS.ACCEPTED,
+    APPLICATION_STATUS.INTERVIEWING,
+    APPLICATION_STATUS.OFFERED,
+    APPLICATION_STATUS.REJECTED,
+    APPLICATION_STATUS.REVIEWED,
+    APPLICATION_STATUS.SUBMITTED,
+    APPLICATION_STATUS.TECHNICAL_TEST,
+];
