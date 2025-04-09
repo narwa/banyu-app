@@ -38,16 +38,22 @@ const dashboardMenu = computed(() =>
                 :to="{ name: 'index' }"
                 variant="unstyled"
             >
-                <Icon
+                <img
                     v-if="isSidebarHovered || !isLargeScreen"
-                    name="banyu:nostratech"
-                    :size="25"
-                />
-                <Icon
+                    src="/images/banyu-app-text.png"
+                    alt="banyu-app-text"
+                    class="object-contain h-10"
+                    loading="lazy"
+                    height="100"
+                >
+                <img
                     v-else
-                    name="banyu:n-icon"
-                    :size="25"
-                />
+                    src="/images/banyu-app-logo.png"
+                    alt="banyu-app-logo"
+                    class="object-contain h-10"
+                    loading="lazy"
+                    height="100"
+                >
             </VLink>
         </div>
 

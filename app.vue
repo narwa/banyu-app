@@ -13,7 +13,7 @@ useHead({
             href: '/favicon.svg',
         },
     ],
-    titleTemplate: 'Nostratech Back Office - %s',
+    titleTemplate: 'BanyuApp Back Office - %s',
 });
 
 const authStore = useAuthStore();

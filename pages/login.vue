@@ -65,6 +65,13 @@ const signInWithGoogle = async () => {
                 >
             </div>
             <div class="max-w-lg h-80 lg:h-[22.5rem] p-8 space-y-6 rounded-lg bg-white shadow-lg flex flex-col items-center justify-center">
+                <img
+                    src="/images/banyu-app-text.png"
+                    alt="Discussion"
+                    class="object-contain h-20"
+                    loading="lazy"
+                    height="100"
+                >
                 <VText
                     as="h5"
                     variant="h5"
