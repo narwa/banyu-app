@@ -1,4 +1,4 @@
-import type { User } from '~/models/User';
+import type { Me } from '~/models/Me';
 import type { Nullable } from '~/types';
 
 export const useAuthStore = defineStore(
@@ -6,7 +6,7 @@ export const useAuthStore = defineStore(
     () => {
         const firebaseToken = shallowRef<string>('');
         const token = shallowRef<string>('');
-        const user = shallowRef<Nullable<User & { photo?: string }>>(null);
+        const user = shallowRef<Nullable<Me & { photo?: string }>>(null);
 
         function setToken(newToken: string) {
             token.value = newToken ?? '';
@@ -22,7 +22,7 @@ export const useAuthStore = defineStore(
             setUser(null);
         }
 
-        function setUser(newUser: Nullable<User & { photo?: string }>) {
+        function setUser(newUser: Nullable<Me & { photo?: string }>) {
             user.value = newUser;
         }
 

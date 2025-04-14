@@ -1,4 +1,4 @@
-import type { ApplicationStatus, ContentStatus, DashboardMenu, ErrorType, StatusAction, StatusOption, StatusVariants } from '~/types';
+import type { ApplicationStatus, ContentStatus, DashboardMenu, ErrorType, StatusAction, StatusOption, StatusVariants, UserType } from '~/types';
 
 export const ERROR_LIST: ErrorType[] = [
     {
@@ -15,6 +15,13 @@ export const ERROR_LIST: ErrorType[] = [
     },
 ] as const;
 
+export const USER_TYPE_VARIANTS: Record<UserType, StatusVariants> = {
+    SUPER_ADMIN: 'primary',
+    ADMIN: 'indigo',
+    MEMBER: 'warning',
+    GUEST: 'danger',
+};
+
 export const DASHBOARD_MENUS: DashboardMenu[] = [
     {
         name: 'Dashboard',
@@ -25,6 +32,18 @@ export const DASHBOARD_MENUS: DashboardMenu[] = [
                 hrefName: 'index',
                 path: '/',
                 icon: 'lucide:gauge',
+            },
+        ],
+    },
+    {
+        name: 'People Management',
+        requireAdmin: true,
+        children: [
+            {
+                name: 'User',
+                hrefName: 'user',
+                path: '/user',
+                icon: 'ic:baseline-people',
             },
         ],
     },

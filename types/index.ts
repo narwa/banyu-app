@@ -50,7 +50,7 @@ export type StatusVariants = 'success' | 'warning' | 'danger' | 'primary' | 'ind
 export type BucketType = 'PRIVATE' | 'PUBLIC';
 export type ContentType = 'BLOG' | 'PORTFOLIO' | 'CAREER' | 'LEGAL' | 'OTHER';
 export type MediaType = 'IMAGE' | 'VIDEO' | 'DOCUMENT';
-export type UserType = 'ADMIN' | 'AUTHOR' | 'MEMBER' | 'GUEST';
+export type UserType = 'SUPER_ADMIN' | 'ADMIN' | 'GUEST' | 'MEMBER';
 export type GeneralSeo = {
     metaTitle: string;
     metaDescription: string;

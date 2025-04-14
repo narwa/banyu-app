@@ -1,5 +1,11 @@
-import type { User } from '~/models/User';
+import type { UserDto } from '~/models/dtos/UserDto';
+import type { UserPaginationSearchParams } from '~/models/params/UserPaginationSearchParams';
+import type { UserDetail, UserListResponse, UserResponse } from '~/models/User';
+import type { GenericPagination } from '~/types';
 
 export type UserService = {
-    getDetailProfile: () => Promise<User>;
+    getUserList: (params: UserPaginationSearchParams) => Promise<GenericPagination<UserListResponse[]>>;
+    getUserDetail: (slug: string) => Promise<UserDetail>;
+    createUser: (data: UserDto) => Promise<UserResponse>;
+    updateUser: (id: string, data: UserDto) => Promise<UserResponse>;
 };

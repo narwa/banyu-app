@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { PromiseDialogsWrapper } from 'vue-promise-dialogs';
-import { useMutationGetDetailProfile } from './composables/user/useMutationGetDetailProfile';
+import { useMutationGetMeDetail } from './composables/me/queries/useQueryMeDetail';
 
 useHead({
     htmlAttrs: {
@@ -17,7 +17,7 @@ useHead({
 });
 
 const authStore = useAuthStore();
-const { mutateAsync: getDetailProfile } = useMutationGetDetailProfile();
+const { mutateAsync: getDetailProfile } = useMutationGetMeDetail();
 
 watchImmediate(
     () => authStore.token,

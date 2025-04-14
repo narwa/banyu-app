@@ -3,7 +3,7 @@ import {
     ENDPOINT_PATH,
 } from './Endpoint';
 
-export class AuthEndpoint {
+export class MeEndpoint {
     static {
         Endpoint.setEndpoint({
             baseUrl: ENDPOINT_PATH,
@@ -12,6 +12,5 @@ export class AuthEndpoint {
         });
     }
 
-    public static readonly LOGIN = Endpoint.getPath('login/firebase');
     public static readonly GET_PROFILE = Endpoint.getPath('me');
 }

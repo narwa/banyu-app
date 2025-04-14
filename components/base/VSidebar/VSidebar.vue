@@ -24,7 +24,8 @@ function isLinkActive(path: string) {
 }
 
 const dashboardMenu = computed(() =>
-    DASHBOARD_MENUS.filter(menu => !menu.requireAdmin || authStore.user?.userType === 'ADMIN'),
+    // TODO: Later refactor this code
+    DASHBOARD_MENUS.filter(menu => !menu.requireAdmin || authStore.user?.userType === 'SUPER_ADMIN'),
 );
 </script>
 

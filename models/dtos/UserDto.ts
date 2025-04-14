@@ -1,13 +1,10 @@
-export class UserDto {
-    userTypeId!: string;
-    fullName!: string;
-    username!: string;
-    photoProfile!: string;
+import type { UserType } from '~/types';
 
-    setUserTypeId(userTypeId: string): this {
-        this.userTypeId = userTypeId;
-        return this;
-    }
+export class UserDto {
+    username!: string;
+    fullName!: string;
+    userType!: UserType;
+    areas!: string[];
 
     setFullName(fullName: string): this {
         this.fullName = fullName;
@@ -19,8 +16,13 @@ export class UserDto {
         return this;
     }
 
-    setPhotoProfile(photoProfile: string): this {
-        this.photoProfile = photoProfile;
+    setUserType(userType: UserType): this {
+        this.userType = userType;
+        return this;
+    }
+
+    setAreas(areas: string[]): this {
+        this.areas = areas;
         return this;
     }
 }

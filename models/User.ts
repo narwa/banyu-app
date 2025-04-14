@@ -1,12 +1,11 @@
+import type { Me } from './Me';
 import type { UserType } from '~/types';
 
-export type User = {
-    username: string;
-    fullName: string;
-    userType: UserType;
-    userTypeId: string;
-    lastLogin: number;
-    createdAt: number;
-    lastUpdateBy: string;
-    photoProfile: string;
+export type UserListResponse = Omit<Me, 'userType' | 'userTypeId' | 'lastUpdateBy'> & {
+    id: string;
+    updatedAt: number;
+    type: UserType;
+    areas: string[];
 };
+export type UserDetail = UserListResponse;
+export type UserResponse = UserListResponse;

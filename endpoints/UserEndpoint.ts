@@ -12,5 +12,8 @@ export class UserEndpoint {
         });
     }
 
-    public static readonly UPDATE_PROFILE = Endpoint.getPath('[id]/profile');
+    public static readonly USER_LIST = Endpoint.getPath('');
+    public static readonly USER_DETAIL = Endpoint.getPath('[key]');
+    public static readonly USER_CREATE = Endpoint.getPath('');
+    public static readonly USER_UPDATE = Endpoint.getPath('[id]');
 }

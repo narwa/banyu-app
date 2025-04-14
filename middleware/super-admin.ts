@@ -18,7 +18,7 @@ export default defineNuxtRouteMiddleware(async () => {
         }
     }
 
-    if (authStore.user?.userType === 'ADMIN')
+    if (authStore.user?.userType === 'SUPER_ADMIN')
         return;
 
     return navigateTo({ name: 'index' });
