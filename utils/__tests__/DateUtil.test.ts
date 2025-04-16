@@ -1,6 +1,6 @@
 import dayjs from '#build/dayjs.imports.mjs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { calculateAge, convertEpochToDate, formatDate, formatDateToEpoch, formatDateYMDtoDMY, formatEpochToDate, today, toEpochSecond } from '../DateUtil';
+import { calculateAge, convertEpochToDate, formatDate, formatDateToEpoch, formatDateYMDtoDMY, formatEpochToDateTime, today, toEpochSecond } from '../DateUtil';
 
 describe('dateUtil', () => {
     describe('formatDate', () => {
@@ -49,15 +49,15 @@ describe('dateUtil', () => {
         });
     });
 
-    describe('formatEpochToDate', () => {
+    describe('formatEpochToDateTime', () => {
         it('should format epoch seconds to date string', () => {
             const epochSeconds = 1740481428;
-            expect(formatEpochToDate(epochSeconds)).toBe('25 Feb 2025');
+            expect(formatEpochToDateTime(epochSeconds)).toBe('25 Feb 2025');
         });
 
         it('should handle millisecond timestamps', () => {
             const epochMilliseconds = 1740481428000;
-            expect(formatEpochToDate(epochMilliseconds)).toBe('25 Feb 2025');
+            expect(formatEpochToDateTime(epochMilliseconds)).toBe('25 Feb 2025');
         });
     });
 

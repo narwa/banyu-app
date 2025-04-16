@@ -37,9 +37,9 @@ export const toEpochSecond = (date?: number) => date ? date * 1000 : Math.floor(
  * @description A formatted date to epoch.
  */
 
-export const formatEpochToDate = (date: number | Date): string => {
+export const formatEpochToDateTime = (date: number | Date): string => {
     const epochMs = typeof date === 'number' && date < 1e12 ? date * 1000 : date;
-    return dayjs(epochMs).local().format('DD MMM YYYY');
+    return dayjs(epochMs).local().format('DD MMM YYYY hh:mm:ss');
 };
 
 export const convertEpochToDate = (epoch: number): Date => {

@@ -105,8 +105,8 @@ describe('userServiceImpl', () => {
     describe('createUser', () => {
         it('should create a new user', async () => {
             const userData: UserDto = new UserDto()
-                .setUsername('ecountergg')
-                .setFullName('Eka Yuda');
+                .setFullName('Eka Yuda')
+                .setAreas(['Area 1', 'Area 2']);
 
             const expectedResponse: UserResponse = {
                 id: '1',

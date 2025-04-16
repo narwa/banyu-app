@@ -5,7 +5,7 @@ import type { GenericPagination } from '~/types';
 
 export type UserService = {
     getUserList: (params: UserPaginationSearchParams) => Promise<GenericPagination<UserListResponse[]>>;
-    getUserDetail: (slug: string) => Promise<UserDetail>;
+    getUserDetail: (id: string) => Promise<UserDetail>;
     createUser: (data: UserDto) => Promise<UserResponse>;
     updateUser: (id: string, data: UserDto) => Promise<UserResponse>;
 };

@@ -29,6 +29,7 @@ const classes = computed(() =>
         [`md:grid-cols-${props.md}`]: !!props.md && type === 'cols',
         [`lg:grid-cols-${props.lg}`]: !!props.lg && type === 'cols',
         [`xl:grid-cols-${props.xl}`]: !!props.xl && type === 'cols',
+
         [`grid-rows-${props.grid}`]: !!props.grid && type === 'rows',
         [`sm:grid-rows-${props.sm}`]: !!props.sm && type === 'rows',
         [`md:grid-rows-${props.md}`]: !!props.md && type === 'rows',

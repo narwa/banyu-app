@@ -29,7 +29,7 @@ const { layout = 'vertical', loading = false, ...props } = defineProps<Props>();
                 v-if="title"
                 :class="
                     cn(
-                        'description__title font-medium text-muted-800 dark:text-muted-100',
+                        'description__title font-semibold text-muted-800 dark:text-muted-100',
                         layout === 'horizontal' && loading && 'whitespace-nowrap',
                         props.titleClass)
                 "
@@ -41,7 +41,7 @@ const { layout = 'vertical', loading = false, ...props } = defineProps<Props>();
             <dd
                 :class="
                     cn(
-                        'description__text mt-1.5',
+                        'description__text font-normal',
                         layout === 'horizontal' && 'lg:mt-0',
                         props.textClass,
                     )
