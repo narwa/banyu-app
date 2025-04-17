@@ -43,4 +43,13 @@ export class UserServiceImpl implements UserService {
             },
         );
     }
+
+    deleteUser(id: string): Promise<UserResponse> {
+        return useNuxtApp().$api<UserResponse>(
+            UserEndpoint.USER_DELETE.replace('[id]', id),
+            {
+                method: 'DELETE',
+            },
+        );
+    }
 }

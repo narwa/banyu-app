@@ -13,7 +13,7 @@ const pageStore = usePageStore();
         aria-label="breadcrumb"
         :class="cn(props.class)"
     >
-        <ol class="flex items-center gap-1.5 text-yellow-900 sm:gap-2.5 max-w-3xl">
+        <ol class="flex items-center gap-1.5 text-primary-900 sm:gap-2.5 max-w-3xl">
             <template
                 v-for="(item, index) in pageStore.breadcrumbList"
                 :key="index"
@@ -24,7 +24,7 @@ const pageStore = usePageStore();
                 >
                     <NuxtLink
                         :to="item.to"
-                        class="transition-colors text-yellow-900 hover:text-muted-600 truncate whitespace-nowrap block text-sm md:text-base max-w-96"
+                        class="transition-colors text-primary-900 hover:text-muted-600 truncate whitespace-nowrap block text-sm md:text-base max-w-96"
                     >
                         {{ item.name }}
                     </NuxtLink>

@@ -19,8 +19,8 @@ const emits = defineEmits<{
 const reason = shallowRef<string>('');
 const reasonText = computed(() => 'Reason');
 
-const confirmText = computed(() => props.params.confirmText ?? 'Yes , Archive');
-const cancelText = computed(() => props.params.cancelText ?? 'No, Cancel');
+const confirmText = computed(() => props.params.confirmText ?? 'Ya, Hapus');
+const cancelText = computed(() => props.params.cancelText ?? 'Tidak, Batal');
 
 const validationSchema = computed(() =>
     yup.object({

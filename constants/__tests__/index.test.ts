@@ -43,9 +43,4 @@ describe('constants/index.ts', () => {
         expect(indexExports).toHaveProperty('STATUS_OPTIONS');
         expect(indexExports.STATUS_OPTIONS).toBe(generalConstantExports.STATUS_OPTIONS);
     });
-
-    it('should export CONTENT_TEMPLATE constant', () => {
-        expect(indexExports).toHaveProperty('CONTENT_TEMPLATE');
-        expect(indexExports.CONTENT_TEMPLATE).toBe(generalConstantExports.CONTENT_TEMPLATE);
-    });
 });

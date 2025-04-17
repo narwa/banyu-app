@@ -8,4 +8,5 @@ export type UserService = {
     getUserDetail: (id: string) => Promise<UserDetail>;
     createUser: (data: UserDto) => Promise<UserResponse>;
     updateUser: (id: string, data: UserDto) => Promise<UserResponse>;
+    deleteUser: (id: string) => Promise<UserResponse>;
 };

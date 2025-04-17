@@ -11,8 +11,8 @@ const ModalUploadFile = defineAsyncComponent(() => import('~/components/shared/m
 export function useDialog() {
     const handleArchiveConfirmation = (cb: () => void) => () => {
         createPromiseDialog<ConfirmationProps, boolean>(ModalConfirmation)({
-            title: 'Archive This Item',
-            message: 'Are you sure you want to archive this item ? Once archived, it will no longer be visible to the public.',
+            title: 'Hapus Item Ini',
+            message: 'Apakah Anda yakin ingin mengarsipkan item ini? Setelah diarsipkan, item ini tidak akan terlihat lagi oleh publik.',
         }).then((response) => {
             if (response)
                 cb();

@@ -31,7 +31,7 @@ defineProps<Props>();
 
 <style scoped lang="scss">
 .sidebar__link {
-    @apply w-full text-yellow-800 flex items-center justify-center !py-6 !px-3.5 transition-all duration-200;
+    @apply w-full text-primary-800 flex items-center justify-center !py-6 !px-3.5 transition-all duration-200;
 
     & svg {
         @apply text-secondary-500 fill-secondary-500;

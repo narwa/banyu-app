@@ -16,4 +16,5 @@ export class UserEndpoint {
     public static readonly USER_DETAIL = Endpoint.getPath('[key]');
     public static readonly USER_CREATE = Endpoint.getPath('');
     public static readonly USER_UPDATE = Endpoint.getPath('[id]');
+    public static readonly USER_DELETE = Endpoint.getPath('[id]');
 }

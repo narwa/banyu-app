@@ -75,7 +75,7 @@ describe('userServiceImpl', () => {
             const userKey = 'test-user';
             const expectedResponse: UserDetail = {
                 id: '1',
-                username: 'ecountergg',
+                username: 'example',
                 fullName: 'Eka Yuda',
                 type: 'SUPER_ADMIN',
                 photoProfile: '',
@@ -105,12 +105,14 @@ describe('userServiceImpl', () => {
     describe('createUser', () => {
         it('should create a new user', async () => {
             const userData: UserDto = new UserDto()
+                .setUsername('example@gmail.com')
                 .setFullName('Eka Yuda')
+                .setUserType('SUPER_ADMIN')
                 .setAreas(['Area 1', 'Area 2']);
 
             const expectedResponse: UserResponse = {
                 id: '1',
-                username: 'ecountergg',
+                username: 'example@gmail.com',
                 fullName: 'Eka Yuda',
                 type: 'SUPER_ADMIN',
                 photoProfile: '',
@@ -135,12 +137,14 @@ describe('userServiceImpl', () => {
 
         it('should handle duplicate user creation', async () => {
             const duplicateUserData = new UserDto()
-                .setUsername('ecountergg')
-                .setFullName('Eka Yuda');
+                .setUsername('example@gmail.com')
+                .setFullName('Eka Yuda')
+                .setUserType('SUPER_ADMIN')
+                .setAreas(['Area 1', 'Area 2']);
 
-            mockApi.mockRejectedValueOnce(new Error('User with this slug already exists'));
+            mockApi.mockRejectedValueOnce(new Error('User with this username already exists'));
 
-            await expect(service.createUser(duplicateUserData)).rejects.toThrow('User with this slug already exists');
+            await expect(service.createUser(duplicateUserData)).rejects.toThrow('User with this username already exists');
         });
     });
 
@@ -148,18 +152,18 @@ describe('userServiceImpl', () => {
         it('should update an existing user', async () => {
             const userId = '1';
             const userData: UserDto = new UserDto()
-                .setUsername('deerand')
-                .setFullName('Dwi Yudi');
+                .setFullName('Dwi Yudi')
+                .setAreas(['Area 1', 'Area 2']);
             const expectedResponse: UserResponse = {
-                id: '2',
-                username: 'deerand',
+                id: '1',
+                username: 'example@gmail.com',
                 fullName: 'Dwi Yudi',
                 type: 'SUPER_ADMIN',
                 photoProfile: '',
                 lastLogin: 0,
                 createdAt: 0,
                 updatedAt: 0,
-                areas: ['Area 1'],
+                areas: ['Area 1', 'Area 2'],
             };
             mockApi.mockResolvedValueOnce(expectedResponse);
 
@@ -178,8 +182,8 @@ describe('userServiceImpl', () => {
         it('should handle non-existent user update', async () => {
             const nonExistentId = '999';
             const userData = new UserDto()
-                .setUsername('deerand')
-                .setFullName('Dwi Yudi');
+                .setFullName('Dwi Yudi')
+                .setAreas(['Area 1', 'Area 2']);
 
             mockApi.mockRejectedValueOnce(new Error('User not found'));
 

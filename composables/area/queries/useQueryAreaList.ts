@@ -12,7 +12,7 @@ export const useQueryAreaList = (
 ) => {
     const userService = new AreaServiceImpl();
     const query = useQuery<GenericPagination<AreaListResponse[]>>({
-        queryKey: ['user-list', params, searchCount],
+        queryKey: ['area-list', params, searchCount],
         queryFn: () => userService.getAreaList(params),
         ...options,
     });
@@ -25,5 +25,8 @@ export const useQueryAreaList = (
             params.setFirstPage();
         else query.refetch();
     };
-    return { ...query, results, total, refetch };
+    const values = computed(() =>
+        results.value.map(result => result.code),
+    );
+    return { ...query, results, total, values, refetch };
 };

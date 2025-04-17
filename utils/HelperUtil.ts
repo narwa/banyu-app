@@ -84,6 +84,16 @@ export const getInitial = (name: Undefined<string>): string => {
 export const valueOrNull = <TData>(value?: TData | null) => value || null;
 
 /**
+ * @description format value or null
+ */
+export const valueOrString = <TData>(value?: TData | null) => value || '';
+
+/**
+ * @description format value or null
+ */
+export const valueOrFallback = <TData>(fallback: TData, value?: TData | null) => value || fallback;
+
+/**
  * @description format value as string or null
  */
 export const stringOrNull = (value?: string | null) => typeof value === 'string' ? value : null;

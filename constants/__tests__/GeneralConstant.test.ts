@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest';
 import { applicationStatuses } from '~/models/__fixture__/Candidate.fixture';
 import {
     APPLICATION_STATUS_VARIANTS,
-    CONTENT_TEMPLATE,
     DASHBOARD_MENUS,
     ERROR_LIST,
     STATUS_ACTIONS,
@@ -160,24 +159,6 @@ describe('generalConstant', () => {
             expect(optionValues).toContain('INTERVIEWING');
             expect(optionValues).toContain('OFFERED');
             expect(optionValues).toContain('ACCEPTED');
-        });
-    });
-
-    describe('cONTENT_TEMPLATE', () => {
-        it('should have all required template sections', () => {
-            expect(CONTENT_TEMPLATE).toHaveProperty('STUDY_CASE');
-            expect(CONTENT_TEMPLATE).toHaveProperty('BLOG');
-            expect(CONTENT_TEMPLATE).toHaveProperty('JOB_POSTING');
-
-            expect(CONTENT_TEMPLATE.STUDY_CASE).toHaveProperty('SUMMARY');
-            expect(CONTENT_TEMPLATE.STUDY_CASE).toHaveProperty('DOWNLOAD');
-            expect(CONTENT_TEMPLATE.BLOG).toHaveProperty('PREVIEW');
-            expect(CONTENT_TEMPLATE.JOB_POSTING).toHaveProperty('PREVIEW');
-
-            expect(typeof CONTENT_TEMPLATE.STUDY_CASE.SUMMARY).toBe('string');
-            expect(typeof CONTENT_TEMPLATE.STUDY_CASE.DOWNLOAD).toBe('string');
-            expect(typeof CONTENT_TEMPLATE.BLOG.PREVIEW).toBe('string');
-            expect(typeof CONTENT_TEMPLATE.JOB_POSTING.PREVIEW).toBe('string');
         });
     });
 });

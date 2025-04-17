@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { UserType } from '~/types';
 import { BreadcrumbBuilder } from '~/builders/BreadcrumbBuilder';
+import { useMutationUserDelete } from '~/composables/user/mutations/useMutationUserDelete';
 import { useMutationGetUserDetail } from '~/composables/user/queries/useQueryUserDetail';
 import { USER_TYPE_VARIANTS } from '~/constants';
 
@@ -20,7 +21,7 @@ pageStore.setBreadcrumbList(
     new BreadcrumbBuilder()
         .setBreadcrumb({
             name: 'User',
-            to: '/user',
+            to: { name: 'user' },
         })
         .setBreadcrumb({
             name: 'User Detail',
@@ -31,14 +32,55 @@ pageStore.setBreadcrumbList(
 const id = computed(() => route.params.id.toString());
 pageStore.setTitle('');
 
+const { handleArchiveConfirmation } = useDialog();
+const { showNotification } = useNotification();
 const queryClient = useQueryClient();
 const { mutateAsync: getUserDetail } = useMutationGetUserDetail();
 const userDetail = await getUserDetail({ userKey: id.value });
 queryClient.setQueryData(['userDetail'], userDetail);
+
+const { mutate: deleteUser } = useMutationUserDelete({
+    onSuccess: () => {
+        showNotification({
+            type: 'success',
+            title: 'Hapus berhasil!',
+            message: 'Pengguna telah dihapus',
+        });
+        queryClient.invalidateQueries({
+            queryKey: ['user-list'],
+        });
+        navigateTo({ name: 'user' });
+    },
+});
+
+const handleDelete = handleArchiveConfirmation(async () => {
+    deleteUser(userDetail.id);
+});
 </script>
 
 <template>
     <NuxtLayout name="default">
+        <template #header-actions>
+            <VFlex
+                direction="row"
+                gap="4"
+            >
+                <VLink
+                    variant="secondary"
+                    :to="{ name: 'user-edit', params: { id: route.params.id } }"
+                >
+                    Ubah
+                    <Icon name="lucide:circle-plus" />
+                </VLink>
+                <VButton
+                    variant="danger"
+                    @click="handleDelete"
+                >
+                    Hapus
+                    <Icon name="lucide:trash" />
+                </VButton>
+            </VFlex>
+        </template>
         <VCard>
             <VFlex
                 gap-x="2"

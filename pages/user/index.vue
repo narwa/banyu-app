@@ -94,27 +94,41 @@ const handleSearch = () => {
 <template>
     <NuxtLayout name="default">
         <template #header-actions>
-            <form
-                class="w-full max-w-xs"
-                @submit.prevent="handleSearch"
+            <VFlex
+                direction="row"
+                items="center"
+                gap="4"
+                class="w-full max-w-lg"
             >
-                <VInput
-                    id="userFullName"
-                    v-model="search.fullName"
-                    name="userFullName"
-                    type="text"
-                    size="md"
-                    placeholder="Search user name ..."
-                    input-class="border border-gray-700 placeholder:text-gray-700"
+                <form
+                    class="w-full max-w-xs"
+                    @submit.prevent="handleSearch"
                 >
-                    <template #prefixIcon>
-                        <Icon
-                            name="lucide:search"
-                            class="text-gray-700"
-                        />
-                    </template>
-                </VInput>
-            </form>
+                    <VInput
+                        id="userFullName"
+                        v-model="search.fullName"
+                        name="userFullName"
+                        type="text"
+                        size="md"
+                        placeholder="Search user name ..."
+                        input-class="border border-gray-700 placeholder:text-gray-700"
+                    >
+                        <template #prefixIcon>
+                            <Icon
+                                name="lucide:search"
+                                class="text-gray-700"
+                            />
+                        </template>
+                    </VInput>
+                </form>
+                <VLink
+                    variant="primary"
+                    :to="{ name: 'user-create' }"
+                >
+                    Tambah User
+                    <Icon name="lucide:circle-plus" />
+                </VLink>
+            </VFlex>
         </template>
 
         <VTable

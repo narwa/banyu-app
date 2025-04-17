@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import type { APPLICATION_STATUS } from '~/constants';
+import type { APPLICATION_STATUS, USER_TYPE } from '~/constants';
 
 export type SetupModule = (app: App<Element>) => void;
 export type ObjectValues<Type> = Type[keyof Type];
@@ -50,7 +50,7 @@ export type StatusVariants = 'success' | 'warning' | 'danger' | 'primary' | 'ind
 export type BucketType = 'PRIVATE' | 'PUBLIC';
 export type ContentType = 'BLOG' | 'PORTFOLIO' | 'CAREER' | 'LEGAL' | 'OTHER';
 export type MediaType = 'IMAGE' | 'VIDEO' | 'DOCUMENT';
-export type UserType = 'SUPER_ADMIN' | 'ADMIN' | 'GUEST' | 'MEMBER';
+export type UserType = typeof USER_TYPE[keyof typeof USER_TYPE];
 export type GeneralSeo = {
     metaTitle: string;
     metaDescription: string;
