@@ -12,7 +12,7 @@ export function useDialog() {
     const handleArchiveConfirmation = (cb: () => void) => () => {
         createPromiseDialog<ConfirmationProps, boolean>(ModalConfirmation)({
             title: 'Hapus Item Ini',
-            message: 'Apakah Anda yakin ingin mengarsipkan item ini? Setelah diarsipkan, item ini tidak akan terlihat lagi oleh publik.',
+            message: 'Apakah Anda yakin ingin menghapus item ini? Setelah dihapus, item ini tidak akan terlihat lagi oleh publik.',
         }).then((response) => {
             if (response)
                 cb();
