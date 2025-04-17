@@ -2,7 +2,24 @@ import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 
 export const inputVariants = cva(
-    'font-lato block w-full py-0 text-sm text-muted-800 placeholder-muted-300 transition duration-150 disabled:opacity-70 disabled:cursor-not-allowed dark:disabled:opacity-60 bg-white disabled:bg-muted-50 dark:disabled:bg-muted-700 dark:bg-muted-700 dark:text-muted-100 focus:relative focus:z-10 focus:ring-1 focus:ring-primary-800 disabled:focus:ring-0 dark:focus:ring-primary-700 border border-muted-200 focus:border-primary-800 disabled:focus:border-muted-200 dark:disabled:border-muted-700 dark:disabled:focus:border-muted-700 dark:border-muted-700 dark:focus:border-primary-700',
+    `
+        font-lato block w-full py-0 text-sm text-muted-800 placeholder-muted-300 transition duration-150
+        bg-white dark:bg-muted-700 dark:text-muted-100
+
+        border border-muted-200 dark:border-muted-700
+        focus:border-primary-800 dark:focus:border-primary-700
+        focus-visible:border-primary-800 dark:focus-visible:border-primary-700
+        disabled:border-muted-200 dark:disabled:border-muted-700
+        disabled:focus:border-muted-200 dark:disabled:focus:border-muted-700
+        disabled:focus-visible:border-muted-200 dark:disabled:focus-visible:border-muted-700
+
+        focus:ring-1 focus:ring-primary-800 dark:focus:ring-primary-700
+        focus-visible:ring-1 focus-visible:ring-primary-800 dark:focus-visible:ring-primary-700
+        disabled:focus:ring-0 disabled:focus-visible:ring-0
+
+        disabled:opacity-70 dark:disabled:opacity-60
+        disabled:cursor-not-allowed disabled:bg-muted-50
+    `,
     {
         variants: {
             rounded: {
