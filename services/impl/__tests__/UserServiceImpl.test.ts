@@ -53,7 +53,7 @@ describe('userServiceImpl', () => {
 
             await service.getUserList(params);
 
-            expect(mockApi).toHaveBeenCalledWith(UserEndpoint.USER_LIST, {
+            expect(mockApi).toHaveBeenCalledWith(UserEndpoint.LIST, {
                 query: expect.objectContaining({
                     page: 1,
                     size: 20,
@@ -71,8 +71,8 @@ describe('userServiceImpl', () => {
     });
 
     describe('getUserDetail', () => {
-        it('should fetch user detail by key', async () => {
-            const userKey = 'test-user';
+        it('should fetch user detail by id', async () => {
+            const userId = 'test-user';
             const expectedResponse: UserDetail = {
                 id: '1',
                 username: 'example',
@@ -86,13 +86,13 @@ describe('userServiceImpl', () => {
             };
             mockApi.mockResolvedValueOnce(expectedResponse);
 
-            const result = await service.getUserDetail(userKey);
+            const result = await service.getUserDetail(userId);
 
             expect(result).toEqual(expectedResponse);
-            expect(mockApi).toHaveBeenCalledWith(UserEndpoint.USER_DETAIL.replace('[key]', userKey));
+            expect(mockApi).toHaveBeenCalledWith(UserEndpoint.DETAIL.replace('[id]', userId));
         });
 
-        it('should handle non-existent user key', async () => {
+        it('should handle non-existent user id', async () => {
             const nonExistentKey = 'non-existent-user';
             mockApi.mockResolvedValueOnce(null);
 
@@ -127,7 +127,7 @@ describe('userServiceImpl', () => {
 
             expect(result).toEqual(expectedResponse);
             expect(mockApi).toHaveBeenCalledWith(
-                UserEndpoint.USER_CREATE,
+                UserEndpoint.CREATE,
                 {
                     method: 'POST',
                     body: userData,
@@ -171,7 +171,7 @@ describe('userServiceImpl', () => {
 
             expect(result).toEqual(expectedResponse);
             expect(mockApi).toHaveBeenCalledWith(
-                UserEndpoint.USER_UPDATE.replace('[id]', userId),
+                UserEndpoint.UPDATE.replace('[id]', userId),
                 {
                     method: 'PUT',
                     body: userData,

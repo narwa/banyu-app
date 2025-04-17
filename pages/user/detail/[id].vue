@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { UserType } from '~/types';
+import { toast } from 'vue-sonner';
 import { BreadcrumbBuilder } from '~/builders/BreadcrumbBuilder';
 import { useMutationUserDelete } from '~/composables/user/mutations/useMutationUserDelete';
 import { useMutationGetUserDetail } from '~/composables/user/queries/useQueryUserDetail';
@@ -12,7 +13,7 @@ definePageMeta({
 });
 
 useSeoMeta({
-    title: 'User Detail',
+    title: 'Detil Pengguna',
 });
 
 const route = useRoute();
@@ -20,11 +21,11 @@ const pageStore = usePageStore();
 pageStore.setBreadcrumbList(
     new BreadcrumbBuilder()
         .setBreadcrumb({
-            name: 'User',
+            name: 'Pengguna',
             to: { name: 'user' },
         })
         .setBreadcrumb({
-            name: 'User Detail',
+            name: 'Pengguna Detail',
         })
         .build(),
 );
@@ -36,8 +37,8 @@ const { handleArchiveConfirmation } = useDialog();
 const { showNotification } = useNotification();
 const queryClient = useQueryClient();
 const { mutateAsync: getUserDetail } = useMutationGetUserDetail();
-const userDetail = await getUserDetail({ userKey: id.value });
-queryClient.setQueryData(['userDetail'], userDetail);
+const userDetail = await getUserDetail({ id: id.value });
+queryClient.setQueryData(['user-detail'], userDetail);
 
 const { mutate: deleteUser } = useMutationUserDelete({
     onSuccess: () => {
@@ -50,6 +51,9 @@ const { mutate: deleteUser } = useMutationUserDelete({
             queryKey: ['user-list'],
         });
         navigateTo({ name: 'user' });
+    },
+    onMutate: () => {
+        toast.info('Hapus pengguna dalam proses ...');
     },
 });
 
@@ -81,7 +85,7 @@ const handleDelete = handleArchiveConfirmation(async () => {
                 </VButton>
             </VFlex>
         </template>
-        <VCard>
+        <VCard title="User Detil">
             <VFlex
                 gap-x="2"
                 class="border-b pb-4"

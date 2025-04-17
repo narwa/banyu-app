@@ -13,9 +13,9 @@ export const useMutationUserUpdate = (
         unknown
     >,
 ) => {
-    const UserService = new UserServiceImpl();
+    const userService = new UserServiceImpl();
     return useMutation({
-        mutationFn: (data: UserDto) => UserService.updateUser(toValue(id), data),
+        mutationFn: (data: UserDto) => userService.updateUser(toValue(id), data),
         ...options,
     });
 };

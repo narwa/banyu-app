@@ -11,9 +11,9 @@ export const useMutationUserDelete = (
         unknown
     >,
 ) => {
-    const UserService = new UserServiceImpl();
+    const userService = new UserServiceImpl();
     return useMutation({
-        mutationFn: (id: string) => UserService.deleteUser(toValue(id)),
+        mutationFn: (id: string) => userService.deleteUser(toValue(id)),
         ...options,
     });
 };

@@ -12,9 +12,9 @@ export const useMutationUserCreate = (
         unknown
     >,
 ) => {
-    const UserService = new UserServiceImpl();
+    const userService = new UserServiceImpl();
     return useMutation({
-        mutationFn: (data: UserDto) => UserService.createUser(data),
+        mutationFn: (data: UserDto) => userService.createUser(data),
         ...options,
     });
 };

@@ -43,14 +43,26 @@ export const DASHBOARD_MENUS: DashboardMenu[] = [
         ],
     },
     {
-        name: 'People Management',
+        name: 'Manajemen Akun',
         requireAdmin: true,
         children: [
             {
                 name: 'User',
                 hrefName: 'user',
                 path: '/user',
-                icon: 'ic:baseline-people',
+                icon: 'lucide:user',
+            },
+        ],
+    },
+    {
+        name: 'Konfigurasi',
+        requireAdmin: true,
+        children: [
+            {
+                name: 'Konfigurasi Umum',
+                hrefName: 'general-config',
+                path: '/general-config',
+                icon: 'lucide:settings',
             },
         ],
     },

@@ -8,21 +8,21 @@ definePageMeta({
 });
 
 useSeoMeta({
-    title: 'Update User',
+    title: 'Ubah Pengguna',
 });
 
 const route = useRoute();
 const id = computed(() => route.params.id.toString());
 
 const { mutateAsync: getUserDetail } = useMutationGetUserDetail();
-const userDetail = await getUserDetail({ userKey: id.value });
+const userDetail = await getUserDetail({ id: id.value });
 
 const pageStore = usePageStore();
 pageStore.setTitle('');
 pageStore.setBreadcrumbList(
     new BreadcrumbBuilder()
         .setBreadcrumb({
-            name: 'User',
+            name: 'Pengguna',
             to: { name: 'user' },
         })
         .setBreadcrumb({

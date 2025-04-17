@@ -8,8 +8,8 @@ type Props = {
 };
 const props = defineProps<Props>();
 
-const title = computed(() => props.title ?? 'No results found');
-const text = computed(() => props.text ?? 'Start by creating new data');
+const title = computed(() => props.title ?? 'Tidak ada data');
+const text = computed(() => props.text ?? 'Mulailah dengan membuat data baru');
 </script>
 
 <template>

@@ -25,32 +25,32 @@ const state = reactive({
 });
 
 const { showNotification } = useNotification();
-const { mutateAsync: createUser } = useMutationUserCreate({
+const { mutate: createUser, isPending: isPendingCreateUser } = useMutationUserCreate({
     onSuccess: (data) => {
         showNotification({
             type: 'success',
-            title: 'Create Success',
-            message: `User created successfully - ${data.username}`,
+            title: 'Sukses Dibuat',
+            message: `Pengguna berhasil dibuat - ${data.username}`,
         });
         navigateTo({ name: 'user' });
     },
     onMutate: () => {
-        toast.info('Create user is in progress ...');
+        toast.info('Buat pengguna dalam proses ...');
     },
 });
 
-const { mutateAsync: updateUser } = useMutationUserUpdate(state.id, {
+const { mutate: updateUser, isPending: isPendingUpdateUser } = useMutationUserUpdate(state.id, {
     onSuccess: (data) => {
         showNotification({
             type: 'success',
-            title: 'Update Success',
-            message: `User updated successfully - ${data.username}`,
+            title: 'Sukses Diperbarui',
+            message: `Pengguna berhasi diperbarui - ${data.username}`,
         });
         navigateTo({ name: 'user' });
     },
 
     onMutate: () => {
-        toast.info('Updating user is in progress ...');
+        toast.info('Ubah pengguna dalam proses ...');
     },
 });
 
@@ -69,7 +69,7 @@ const schema = yup.object({
             USER_TYPE.MEMBER,
             USER_TYPE.GUEST,
         ])
-        .required('Tipe user harus diisi'),
+        .required('Tipe pengguna harus diisi'),
     areas: yup
         .array()
         .of(yup.string())
@@ -91,17 +91,20 @@ const onSubmit = handleSubmit(async () => {
     };
 
     if (data) {
-        await updateUser(stateUser());
+        updateUser(stateUser());
         return;
     }
 
-    await createUser(stateUser());
+    createUser(stateUser());
 });
 </script>
 
 <template>
     <form @submit.prevent="onSubmit">
-        <VCard class="h-full">
+        <VCard
+            title="Form Pengguna"
+            class="h-full"
+        >
             <VFlex
                 direction="col"
                 gap="4"
@@ -124,9 +127,9 @@ const onSubmit = handleSubmit(async () => {
                 <VSelect
                     v-model="state.userType"
                     name="type"
-                    label="Pilih Tipe User"
+                    label="Pilih Tipe Pengguna"
                     :options="userTypeList"
-                    placeholder="Mohon pilih tipe user"
+                    placeholder="Mohon pilih tipe pengguna"
                     size="lg"
                     required
                     clearable
@@ -151,6 +154,9 @@ const onSubmit = handleSubmit(async () => {
                 <VButton
                     variant="primary"
                     type="submit"
+                    :loading="
+                        isPendingCreateUser || isPendingUpdateUser
+                    "
                 >
                     Simpan
                     <Icon name="lucide:circle-plus" />

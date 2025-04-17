@@ -8,7 +8,7 @@ import { UserEndpoint } from '~/endpoints/UserEndpoint';
 
 export class UserServiceImpl implements UserService {
     async getUserList(params: UserPaginationSearchParams): Promise<GenericPagination<UserListResponse[]>> {
-        return await useNuxtApp().$api<GenericPagination<UserListResponse[]>>(UserEndpoint.USER_LIST, {
+        return await useNuxtApp().$api<GenericPagination<UserListResponse[]>>(UserEndpoint.LIST, {
             query: {
                 ...params,
                 page: params.page - 1,
@@ -16,13 +16,13 @@ export class UserServiceImpl implements UserService {
         });
     }
 
-    async getUserDetail(key: string): Promise<UserDetail> {
-        return await useNuxtApp().$api<UserDetail>(UserEndpoint.USER_DETAIL.replace('[key]', key));
+    async getUserDetail(id: string): Promise<UserDetail> {
+        return await useNuxtApp().$api<UserDetail>(UserEndpoint.DETAIL.replace('[id]', id));
     }
 
     createUser(data: UserDto): Promise<UserResponse> {
         return useNuxtApp().$api<UserResponse>(
-            UserEndpoint.USER_CREATE,
+            UserEndpoint.CREATE,
             {
                 method: 'POST',
                 body: {
@@ -34,7 +34,7 @@ export class UserServiceImpl implements UserService {
 
     updateUser(id: string, data: UserDto): Promise<UserResponse> {
         return useNuxtApp().$api<UserResponse>(
-            UserEndpoint.USER_UPDATE.replace('[id]', id),
+            UserEndpoint.UPDATE.replace('[id]', id),
             {
                 method: 'PUT',
                 body: {
@@ -46,7 +46,7 @@ export class UserServiceImpl implements UserService {
 
     deleteUser(id: string): Promise<UserResponse> {
         return useNuxtApp().$api<UserResponse>(
-            UserEndpoint.USER_DELETE.replace('[id]', id),
+            UserEndpoint.DELETE.replace('[id]', id),
             {
                 method: 'DELETE',
             },

@@ -8,14 +8,14 @@ export const useMutationGetUserDetail = (
         UserDetail,
         ErrorResponse,
         {
-            userKey: string;
+            id: string;
         },
         unknown
     >,
 ) => {
     const userService = new UserServiceImpl();
     return useMutation({
-        mutationFn: ({ userKey }) => userService.getUserDetail(userKey),
+        mutationFn: ({ id }) => userService.getUserDetail(id),
         ...options,
     });
 };

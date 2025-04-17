@@ -46,18 +46,18 @@ describe('useMutationGetUserDetail', () => {
     });
 
     it('should fetch user detail correctly', async () => {
-        const userKey = 'test-user-1';
+        const id = 'test-user-1';
 
         expect(spyOnGetUserDetail).toHaveBeenCalledTimes(0);
 
-        useMutationGetUserDetailwrapper.vm.mutateAsync({ userKey });
+        useMutationGetUserDetailwrapper.vm.mutateAsync({ id });
 
         expect(useMutationGetUserDetailwrapper.vm.isPending).toBe(true);
 
         await flushPromises();
 
         expect(spyOnGetUserDetail).toHaveBeenCalledTimes(1);
-        expect(spyOnGetUserDetail).toHaveBeenCalledWith(userKey);
+        expect(spyOnGetUserDetail).toHaveBeenCalledWith(id);
         expect(useMutationGetUserDetailwrapper.vm.isPending).toBe(false);
     });
 
@@ -65,18 +65,18 @@ describe('useMutationGetUserDetail', () => {
         const error = new Error('Failed to fetch user detail');
         spyOnGetUserDetail.mockRejectedValueOnce(error);
 
-        const userKey = 'non-existent';
+        const id = 'non-existent';
 
-        await expect(useMutationGetUserDetailwrapper.vm.mutateAsync({ userKey })).rejects.toThrowError(error);
+        await expect(useMutationGetUserDetailwrapper.vm.mutateAsync({ id })).rejects.toThrowError(error);
 
-        expect(spyOnGetUserDetail).toHaveBeenCalledWith(userKey);
+        expect(spyOnGetUserDetail).toHaveBeenCalledWith(id);
     });
 
     it('should reset mutation state when reset is called', async () => {
         spyOnGetUserDetail.mockRejectedValueOnce(new Error('Failed to fetch user detail'));
-        const errorUserKey = 'error-user-1';
+        const errorId = 'error-user-1';
 
-        await expect(useMutationGetUserDetailwrapper.vm.mutateAsync({ userKey: errorUserKey })).rejects.toThrowError(
+        await expect(useMutationGetUserDetailwrapper.vm.mutateAsync({ id: errorId })).rejects.toThrowError(
             'Failed to fetch user detail',
         );
 

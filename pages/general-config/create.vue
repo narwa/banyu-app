@@ -2,12 +2,12 @@
 import { BreadcrumbBuilder } from '~/builders/BreadcrumbBuilder';
 
 useSeoMeta({
-    title: 'Create Pengguna',
+    title: 'Buat Pengguna',
 });
 
 definePageMeta({
     middleware: ['auth', 'super-admin'],
-    name: 'user-create',
+    name: 'general-config-create',
 });
 
 const pageStore = usePageStore();
@@ -16,16 +16,16 @@ pageStore.setTitle('');
 pageStore.setBreadcrumbList(
     new BreadcrumbBuilder()
         .setBreadcrumb({
-            name: 'Pengguna',
-            to: { name: 'user' },
+            name: 'Konfigurasi Umum',
+            to: { name: 'general-config' },
         })
         .setBreadcrumb({
-            name: 'Buat Pengguna',
+            name: 'Buat Konfigurasi Umum',
         })
         .build(),
 );
 </script>
 
 <template>
-    <FormUser action="create" />
+    <FormGeneralConfig action="create" />
 </template>

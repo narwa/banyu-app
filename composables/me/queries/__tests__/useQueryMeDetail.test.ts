@@ -62,11 +62,11 @@ describe('useMutationGetMeDetail', () => {
         const error = new Error('Failed to fetch user detail');
         spyOnGetMeDetail.mockRejectedValueOnce(error);
 
-        const userKey = 'non-existent';
+        const id = 'non-existent';
 
         await expect(useMutationGetMeDetailwrapper.vm.mutateAsync()).rejects.toThrowError(error);
 
-        expect(spyOnGetMeDetail).toHaveBeenCalledWith(userKey);
+        expect(spyOnGetMeDetail).toHaveBeenCalledWith(id);
     });
 
     it('should reset mutation state when reset is called', async () => {
