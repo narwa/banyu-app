@@ -69,27 +69,46 @@ const handleSearch = () => {
 <template>
     <NuxtLayout name="default">
         <template #header-actions>
-            <form
-                class="w-full max-w-xs"
-                @submit.prevent="handleSearch"
+            <VFlex
+                justify="between"
+                gap="4"
+                class="w-full"
             >
-                <VInput
-                    id="areaCode"
-                    v-model="search.code"
-                    name="areaCode"
-                    type="text"
-                    size="md"
-                    placeholder="Search area code..."
-                    input-class="border border-gray-700 placeholder:text-gray-700"
+                <form
+                    class="w-full max-w-xs"
+                    @submit.prevent="handleSearch"
                 >
-                    <template #prefixIcon>
-                        <Icon
-                            name="lucide:search"
-                            class="text-gray-700"
+                    <VInput
+                        id="areaCode"
+                        v-model="search.code"
+                        name="areaCode"
+                        type="text"
+                        size="md"
+                        placeholder="Search area code..."
+                        input-class="border border-gray-700 placeholder:text-gray-700"
+                    >
+                        <template #prefixIcon>
+                            <Icon
+                                name="lucide:search"
+                                class="text-gray-700"
+                            />
+                        </template>
+                    </VInput>
+                </form>
+
+                <NuxtLink to="/area/create">
+                    <VButton
+                        variant="primary"
+                        size="md"
+                    >
+                        <VIcon
+                            name="plus"
+                            class="mr-1"
                         />
-                    </template>
-                </VInput>
-            </form>
+                        Create New Area
+                    </VButton>
+                </NuxtLink>
+            </VFlex>
         </template>
 
         <VTable
