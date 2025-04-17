@@ -57,7 +57,7 @@ describe('userServiceImpl', () => {
                 query: expect.objectContaining({
                     page: 1,
                     size: 20,
-                    sortBy: 'title',
+                    sort: 'title',
                     direction: 'desc',
                 }),
             });

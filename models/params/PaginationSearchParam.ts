@@ -2,11 +2,10 @@ import type { SortDirection } from '~/components/base/VTable';
 import type { Undefined } from '~/types';
 
 export class PaginationSearchParam {
-    sortBy!: Undefined<string>;
+    sort!: Undefined<string>;
     direction!: Undefined<SortDirection>;
     page!: number;
     size!: number;
-    limit!: number;
 
     constructor() {
         Object.assign(this, {
@@ -17,7 +16,7 @@ export class PaginationSearchParam {
     }
 
     setSortBy(value: Undefined<string>): this {
-        this.sortBy = value;
+        this.sort = value;
         return this;
     }
 
@@ -38,11 +37,6 @@ export class PaginationSearchParam {
 
     setSize(size: number): this {
         this.size = size;
-        return this;
-    }
-
-    setLimit(limit: number): this {
-        this.limit = limit;
         return this;
     }
 }

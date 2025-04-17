@@ -4,6 +4,7 @@ import { BreadcrumbBuilder } from '~/builders/BreadcrumbBuilder';
 import { TableColumnBuilder } from '~/builders/TableColumnBuilder';
 import VBadge from '~/components/base/VBadge/VBadge.vue';
 import VLink from '~/components/base/VLink/VLink.vue';
+import VText from '~/components/base/VText/VText.vue';
 import { useQueryUserList } from '~/composables/user/queries/useQueryUserList';
 import { USER_TYPE_VARIANTS } from '~/constants';
 import { UserPaginationSearchParams } from '~/models/params/UserPaginationSearchParams';
@@ -62,6 +63,24 @@ const columns = computed(() =>
                 variant: USER_TYPE_VARIANTS[row.type],
             }, () => row.type),
         })
+        .setColumn({
+            key: 'lastLogin',
+            sortKey: 'lastLogin',
+            name: 'Terakhir Login',
+            render: row => h(VText, {
+                as: 'p',
+                variant: 'base',
+            }, () => formatEpochToDateTime(row.lastLogin)),
+        })
+        .setColumn({
+            key: 'createdAt',
+            sortKey: 'createdAt',
+            name: 'Tanggal Dibuat',
+            render: row => h(VText, {
+                as: 'p',
+                variant: 'base',
+            }, () => formatEpochToDateTime(row.createdAt)),
+        })
         .build(),
 );
 
@@ -99,10 +118,10 @@ const handleSearch = () => {
         </template>
 
         <VTable
-            v-model:sort-key="params.sortBy"
+            v-model:sort-key="params.sort"
             v-model:sort-direction="params.direction"
             v-model:page="params.page"
-            v-model:per-page="params.limit"
+            v-model:per-page="params.size"
             title="User"
             :entries="results"
             :columns="columns"
