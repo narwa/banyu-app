@@ -14,4 +14,8 @@ export class AreaServiceImpl implements AreaService {
             },
         });
     }
+
+    async getAreaDetail(code: string): Promise<AreaListResponse> {
+        return await useNuxtApp().$api<AreaListResponse>(AreaEndpoint.AREA_DETAIL(code));
+    }
 }

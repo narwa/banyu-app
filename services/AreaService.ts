@@ -4,4 +4,5 @@ import type { GenericPagination } from '~/types';
 
 export type AreaService = {
     getAreaList: (params: PaginationSearchParam) => Promise<GenericPagination<AreaListResponse[]>>;
+    getAreaDetail: (code: string) => Promise<AreaListResponse>;
 };

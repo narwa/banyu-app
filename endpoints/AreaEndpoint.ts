@@ -13,4 +13,5 @@ export class AreaEndpoint {
     }
 
     public static readonly AREA_LIST = Endpoint.getPath('');
+    public static readonly AREA_DETAIL = (code: string) => Endpoint.getPath(`/${code}`);
 }

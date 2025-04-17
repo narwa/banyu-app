@@ -64,6 +64,12 @@ export const DASHBOARD_MENUS: DashboardMenu[] = [
                 path: '/general-config',
                 icon: 'lucide:settings',
             },
+            {
+                name: 'Area',
+                hrefName: 'area',
+                path: '/area',
+                icon: 'lucide:map-pin',
+            },
         ],
     },
 ] as const;
