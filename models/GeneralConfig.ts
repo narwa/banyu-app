@@ -3,5 +3,5 @@ export type GeneralConfigListResponse = {
     dataType: string;
     value: string;
 };
-export type GeneralConfigDetail = GeneralConfigListResponse;
+export type GeneralConfigDetailResponse = GeneralConfigListResponse;
 export type GeneralConfigResponse = GeneralConfigListResponse;

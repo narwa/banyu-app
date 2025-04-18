@@ -1,5 +1,5 @@
 import type { GeneralConfigDto } from '~/models/dtos/GeneralConfigDto';
-import type { GeneralConfigDetail, GeneralConfigListResponse, GeneralConfigResponse } from '~/models/GeneralConfig';
+import type { GeneralConfigDetailResponse, GeneralConfigListResponse, GeneralConfigResponse } from '~/models/GeneralConfig';
 import type { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
 import type { GeneralConfigService } from '~/services/GeneralConfigService';
 import type { GenericPagination } from '~/types';
@@ -16,8 +16,8 @@ export class GeneralConfigServiceImpl implements GeneralConfigService {
         });
     }
 
-    async getGeneralConfigDetail(code: string): Promise<GeneralConfigDetail> {
-        return await useNuxtApp().$api<GeneralConfigDetail>(GeneralConfigEndpoint.DETAIL.replace('[code]', code));
+    async getGeneralConfigDetail(code: string): Promise<GeneralConfigDetailResponse> {
+        return await useNuxtApp().$api<GeneralConfigDetailResponse>(GeneralConfigEndpoint.DETAIL.replace('[code]', code));
     }
 
     createGeneralConfig(data: GeneralConfigDto): Promise<GeneralConfigResponse> {

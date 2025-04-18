@@ -7,5 +7,5 @@ export type UserListResponse = Omit<Me, 'userType' | 'userTypeId' | 'lastUpdateB
     type: UserType;
     areas: string[];
 };
-export type UserDetail = UserListResponse;
+export type UserDetailResponse = UserListResponse;
 export type UserResponse = UserListResponse;

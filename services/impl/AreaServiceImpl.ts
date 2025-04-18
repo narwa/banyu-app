@@ -1,13 +1,14 @@
-import type { AreaListResponse } from '~/models/Area';
+import type { AreaDetailResponse, AreaListResponse, AreaResponse } from '~/models/Area';
+import type { AreaDto } from '~/models/dtos/AreaDto';
 import type { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
-import type { AreaCreateRequest, AreaService, AreaUpdateRequest } from '~/services/AreaService';
+import type { AreaService } from '~/services/AreaService';
 import type { GenericPagination } from '~/types';
 import { useNuxtApp } from '#app';
 import { AreaEndpoint } from '~/endpoints/AreaEndpoint';
 
 export class AreaServiceImpl implements AreaService {
     async getAreaList(params: PaginationSearchParam): Promise<GenericPagination<AreaListResponse[]>> {
-        return await useNuxtApp().$api<GenericPagination<AreaListResponse[]>>(AreaEndpoint.AREA_LIST, {
+        return await useNuxtApp().$api<GenericPagination<AreaListResponse[]>>(AreaEndpoint.LIST, {
             query: {
                 ...params,
                 page: params.page - 1,
@@ -15,33 +16,37 @@ export class AreaServiceImpl implements AreaService {
         });
     }
 
-    async getAreaDetail(code: string): Promise<AreaListResponse> {
-        return await useNuxtApp().$api<AreaListResponse>(AreaEndpoint.AREA_DETAIL.replace('[key]', code));
+    async getAreaDetail(code: string): Promise<AreaDetailResponse> {
+        return await useNuxtApp().$api<AreaDetailResponse>(AreaEndpoint.DETAIL.replace('[code]', code));
     }
 
-    async createArea(request: AreaCreateRequest): Promise<AreaListResponse> {
-        return await useNuxtApp().$api<AreaListResponse>(
-            AreaEndpoint.AREA_CREATE,
+    createArea(data: AreaDto): Promise<AreaResponse> {
+        return useNuxtApp().$api<AreaResponse>(
+            AreaEndpoint.CREATE,
             {
                 method: 'POST',
-                body: request,
+                body: {
+                    ...data,
+                },
             },
         );
     }
 
-    async updateArea(request: AreaUpdateRequest): Promise<AreaListResponse> {
-        return await useNuxtApp().$api<AreaListResponse>(
-            AreaEndpoint.AREA_UPDATE.replace('[key]', request.code),
+    updateArea(code: string, data: AreaDto): Promise<AreaResponse> {
+        return useNuxtApp().$api<AreaResponse>(
+            AreaEndpoint.UPDATE.replace('[code]', code),
             {
                 method: 'PUT',
-                body: request,
+                body: {
+                    ...data,
+                },
             },
         );
     }
 
-    async deleteArea(code: string): Promise<void> {
-        await useNuxtApp().$api(
-            AreaEndpoint.AREA_DELETE.replace('[key]', code),
+    deleteArea(code: string): Promise<AreaResponse> {
+        return useNuxtApp().$api<AreaResponse>(
+            AreaEndpoint.DELETE.replace('[code]', code),
             {
                 method: 'DELETE',
             },

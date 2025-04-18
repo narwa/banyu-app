@@ -2,7 +2,7 @@
 import { BreadcrumbBuilder } from '~/builders/BreadcrumbBuilder';
 
 useSeoMeta({
-    title: 'Buat Pengguna',
+    title: 'Tambah Konfigurasi Umum',
 });
 
 definePageMeta({
@@ -20,7 +20,7 @@ pageStore.setBreadcrumbList(
             to: { name: 'general-config' },
         })
         .setBreadcrumb({
-            name: 'Buat Konfigurasi Umum',
+            name: 'Tambah Konfigurasi Umum',
         })
         .build(),
 );

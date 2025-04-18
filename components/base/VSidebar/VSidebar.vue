@@ -24,9 +24,6 @@ function isLinkActive(path: string) {
 }
 
 const dashboardMenu = computed(() => {
-    // TODO: Later refactor this code
-    // eslint-disable-next-line no-console
-    console.log(authStore.user);
     return DASHBOARD_MENUS.filter(menu => !menu.requireAdmin || authStore.user?.userType === 'SUPER_ADMIN');
 },
 );

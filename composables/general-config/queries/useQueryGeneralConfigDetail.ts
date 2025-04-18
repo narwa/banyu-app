@@ -1,11 +1,11 @@
 import type { UseMutationOptions } from '@tanstack/vue-query';
-import type { GeneralConfigDetail } from '~/models/GeneralConfig';
+import type { GeneralConfigDetailResponse } from '~/models/GeneralConfig';
 import type { ErrorResponse } from '~/types';
 import { GeneralConfigServiceImpl } from '~/services/impl/GeneralConfigServiceImpl';
 
 export const useMutationGetGeneralConfigDetail = (
     options?: UseMutationOptions<
-        GeneralConfigDetail,
+        GeneralConfigDetailResponse,
         ErrorResponse,
         {
             code: string;

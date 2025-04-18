@@ -1,12 +1,12 @@
 import type { VueWrapper } from '@vue/test-utils';
-import type { UserDetail } from '~/models/User';
+import type { UserDetailResponse } from '~/models/User';
 import { flushPromises, shallowMount } from '@vue/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defineComponent } from 'vue';
 import { UserServiceImpl } from '~/services/impl/UserServiceImpl';
 import { useMutationGetUserDetail } from '../useQueryUserDetail';
 
-const mockUserDetail: UserDetail = {
+const mockUserDetail: UserDetailResponse = {
     id: '1',
     username: 'ecountergg',
     fullName: 'Eka Yuda',

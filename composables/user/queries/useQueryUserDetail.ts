@@ -1,11 +1,11 @@
 import type { UseMutationOptions } from '@tanstack/vue-query';
-import type { UserDetail } from '~/models/User';
+import type { UserDetailResponse } from '~/models/User';
 import type { ErrorResponse } from '~/types';
 import { UserServiceImpl } from '~/services/impl/UserServiceImpl';
 
 export const useMutationGetUserDetail = (
     options?: UseMutationOptions<
-        UserDetail,
+        UserDetailResponse,
         ErrorResponse,
         {
             id: string;

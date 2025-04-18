@@ -2,7 +2,7 @@
 import { BreadcrumbBuilder } from '~/builders/BreadcrumbBuilder';
 
 useSeoMeta({
-    title: 'Create Pengguna',
+    title: 'Tambah Pengguna',
 });
 
 definePageMeta({
@@ -20,7 +20,7 @@ pageStore.setBreadcrumbList(
             to: { name: 'user' },
         })
         .setBreadcrumb({
-            name: 'Buat Pengguna',
+            name: 'Tambah Pengguna',
         })
         .build(),
 );

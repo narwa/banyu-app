@@ -1,4 +1,4 @@
-import type { UserDetail, UserListResponse, UserResponse } from '~/models/User';
+import type { UserDetailResponse, UserListResponse, UserResponse } from '~/models/User';
 import type { GenericPagination } from '~/types';
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { UserEndpoint } from '~/endpoints/UserEndpoint';
@@ -73,7 +73,7 @@ describe('userServiceImpl', () => {
     describe('getUserDetail', () => {
         it('should fetch user detail by id', async () => {
             const userId = 'test-user';
-            const expectedResponse: UserDetail = {
+            const expectedResponse: UserDetailResponse = {
                 id: '1',
                 username: 'example',
                 fullName: 'Eka Yuda',

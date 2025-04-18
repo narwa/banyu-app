@@ -42,7 +42,7 @@ const columns = computed(() =>
         .setColumn({
             key: 'code',
             sortKey: 'code',
-            name: 'Area Code',
+            name: 'Kode Area',
             render: row => h(VLink, {
                 variant: 'unstyled',
                 class: 'text-gold-500 hover:underline underline-offset-4 decoration-transparent hover:decoration-gold-500 transition-colors duration-300',
@@ -52,7 +52,7 @@ const columns = computed(() =>
         .setColumn({
             key: 'description',
             sortKey: 'description',
-            name: 'Description',
+            name: 'Deskripsi',
             render: row => h(VText, {
                 as: 'p',
                 variant: 'base',
@@ -71,9 +71,10 @@ const handleSearch = () => {
     <NuxtLayout name="default">
         <template #header-actions>
             <VFlex
-                justify="between"
+                direction="row"
+                items="center"
                 gap="4"
-                class="w-full"
+                class="w-full max-w-lg"
             >
                 <form
                     class="w-full max-w-xs"
@@ -85,7 +86,7 @@ const handleSearch = () => {
                         name="areaCode"
                         type="text"
                         size="md"
-                        placeholder="Search area code..."
+                        placeholder="Cari kode area..."
                         input-class="border border-gray-700 placeholder:text-gray-700"
                     >
                         <template #prefixIcon>
@@ -102,7 +103,8 @@ const handleSearch = () => {
                         variant="primary"
                         size="md"
                     >
-                        Create New Area
+                        Tambah Area
+                        <Icon name="lucide:circle-plus" />
                     </VButton>
                 </NuxtLink>
             </VFlex>
