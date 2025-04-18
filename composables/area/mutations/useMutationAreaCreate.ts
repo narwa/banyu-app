@@ -1,13 +1,13 @@
 import type { UseMutationOptions } from '@tanstack/vue-query';
 import type { AreaListResponse } from '~/models/Area';
-import type { AreaUpdateRequest } from '~/services/AreaService';
+import type { AreaDto } from '~/models/dtos/AreaDto';
 import { useMutation } from '@tanstack/vue-query';
 import { AreaServiceImpl } from '~/services/impl/AreaServiceImpl';
 
-export const useMutationUpdateArea = (options?: UseMutationOptions<AreaListResponse, Error, AreaUpdateRequest>) => {
+export const useMutationAreaCreate = (options?: UseMutationOptions<AreaListResponse, Error, AreaDto>) => {
     const areaService = new AreaServiceImpl();
-    return useMutation<AreaListResponse, Error, AreaUpdateRequest>({
-        mutationFn: request => areaService.updateArea(request),
+    return useMutation<AreaListResponse, Error, AreaDto>({
+        mutationFn: request => areaService.createArea(request),
         ...options,
     });
 };

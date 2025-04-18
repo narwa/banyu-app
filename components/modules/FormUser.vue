@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UserDetail } from '~/models/User';
+import type { UserDetailResponse } from '~/models/User';
 import { useForm } from 'vee-validate';
 import { toast } from 'vue-sonner';
 import * as yup from 'yup';
@@ -11,7 +11,7 @@ import { UserDto } from '~/models/dtos/UserDto';
 import { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
 
 const { data, action } = defineProps<{
-    data?: UserDetail;
+    data?: UserDetailResponse;
     action?: 'create' | 'update';
 }>();
 
@@ -35,7 +35,7 @@ const { mutate: createUser, isPending: isPendingCreateUser } = useMutationUserCr
         navigateTo({ name: 'user' });
     },
     onMutate: () => {
-        toast.info('Buat pengguna dalam proses ...');
+        toast.info('Tambah pengguna dalam proses ...');
     },
 });
 
@@ -151,7 +151,12 @@ const onSubmit = handleSubmit(async () => {
                 class="mt-12"
                 direction="row"
             >
-                <VButton
+                <VLink
+                    variant="secondary"
+                    :to="{ name: 'user' }"
+                >
+                    Batal
+                </VLink> <VButton
                     variant="primary"
                     type="submit"
                     :loading="
@@ -161,13 +166,6 @@ const onSubmit = handleSubmit(async () => {
                     Simpan
                     <Icon name="lucide:circle-plus" />
                 </VButton>
-                <VLink
-                    variant="secondary"
-                    class="w-36"
-                    :to="{ name: 'user' }"
-                >
-                    Cancel
-                </VLink>
             </VFlex>
         </VCard>
     </form>

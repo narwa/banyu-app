@@ -1,6 +1,6 @@
 import type { UserDto } from '~/models/dtos/UserDto';
 import type { UserPaginationSearchParams } from '~/models/params/UserPaginationSearchParams';
-import type { UserDetail, UserListResponse, UserResponse } from '~/models/User';
+import type { UserDetailResponse, UserListResponse, UserResponse } from '~/models/User';
 import type { UserService } from '~/services/UserService';
 import type { GenericPagination } from '~/types';
 import { useNuxtApp } from '#app';
@@ -16,8 +16,8 @@ export class UserServiceImpl implements UserService {
         });
     }
 
-    async getUserDetail(id: string): Promise<UserDetail> {
-        return await useNuxtApp().$api<UserDetail>(UserEndpoint.DETAIL.replace('[id]', id));
+    async getUserDetail(id: string): Promise<UserDetailResponse> {
+        return await useNuxtApp().$api<UserDetailResponse>(UserEndpoint.DETAIL.replace('[id]', id));
     }
 
     createUser(data: UserDto): Promise<UserResponse> {

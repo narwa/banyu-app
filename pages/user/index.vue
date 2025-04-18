@@ -110,7 +110,7 @@ const handleSearch = () => {
                         name="userFullName"
                         type="text"
                         size="md"
-                        placeholder="Search user name ..."
+                        placeholder="Cari nama pengguna ..."
                         input-class="border border-gray-700 placeholder:text-gray-700"
                     >
                         <template #prefixIcon>

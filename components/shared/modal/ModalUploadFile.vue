@@ -94,7 +94,7 @@ const onSubmit = handleSubmit(() => {
                         block
                         @click="emits('resolve', emptyResponse)"
                     >
-                        Cancel
+                        Batal
                     </VButton>
 
                     <VButton

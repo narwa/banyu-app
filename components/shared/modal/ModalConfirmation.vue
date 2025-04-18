@@ -23,7 +23,7 @@ const reason = shallowRef<string>('');
 const reasonText = computed(() => '...');
 
 const confirmText = computed(() => props.params.confirmText ?? 'Continue');
-const cancelText = computed(() => props.params.cancelText ?? 'No, Cancel');
+const cancelText = computed(() => props.params.cancelText ?? 'No, Batal');
 
 const validationSchema = computed(() =>
     yup.object({

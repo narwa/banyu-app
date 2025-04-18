@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GeneralConfigDetail } from '~/models/GeneralConfig';
+import type { GeneralConfigDetailResponse } from '~/models/GeneralConfig';
 import { useForm } from 'vee-validate';
 import { toast } from 'vue-sonner';
 import * as yup from 'yup';
@@ -8,7 +8,7 @@ import { useMutationGeneralConfigUpdate } from '~/composables/general-config/mut
 import { GeneralConfigDto } from '~/models/dtos/GeneralConfigDto';
 
 const { data, action } = defineProps<{
-    data?: GeneralConfigDetail;
+    data?: GeneralConfigDetailResponse;
     action?: 'create' | 'update';
 }>();
 
@@ -31,7 +31,7 @@ const { mutate: createGeneralConfig, isPending: isPendingCreateGeneralConfig } =
         navigateTo({ name: 'general-config' });
     },
     onMutate: () => {
-        toast.info('Buat konfigurasi umum dalam proses ...');
+        toast.info('Tambah konfigurasi umum dalam proses ...');
     },
 });
 
@@ -115,6 +115,12 @@ const onSubmit = handleSubmit(async () => {
                 class="mt-12"
                 direction="row"
             >
+                <VLink
+                    variant="secondary"
+                    :to="{ name: 'general-config' }"
+                >
+                    Batal
+                </VLink>
                 <VButton
                     variant="primary"
                     type="submit"
@@ -125,13 +131,6 @@ const onSubmit = handleSubmit(async () => {
                     Simpan
                     <Icon name="lucide:circle-plus" />
                 </VButton>
-                <VLink
-                    variant="secondary"
-                    class="w-36"
-                    :to="{ name: 'general-config' }"
-                >
-                    Cancel
-                </VLink>
             </VFlex>
         </VCard>
     </form>
