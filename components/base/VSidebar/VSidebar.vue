@@ -23,9 +23,12 @@ function isLinkActive(path: string) {
     return path === '/' ? route.path === path : !!route.path?.startsWith(path);
 }
 
-const dashboardMenu = computed(() =>
+const dashboardMenu = computed(() => {
     // TODO: Later refactor this code
-    DASHBOARD_MENUS.filter(menu => !menu.requireAdmin || authStore.user?.userType === 'SUPER_ADMIN'),
+    // eslint-disable-next-line no-console
+    console.log(authStore.user);
+    return DASHBOARD_MENUS.filter(menu => !menu.requireAdmin || authStore.user?.userType === 'SUPER_ADMIN');
+},
 );
 </script>
 

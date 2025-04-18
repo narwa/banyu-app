@@ -363,10 +363,6 @@ function removeRateTier(index: number) {
                             variant="secondary"
                             size="md"
                         >
-                            <VIcon
-                                name="arrow-left"
-                                class="mr-1"
-                            />
                             Back to List
                         </VButton>
                     </NuxtLink>
@@ -378,10 +374,6 @@ function removeRateTier(index: number) {
                         :loading="isDeleting"
                         @click="handleDeleteArea"
                     >
-                        <VIcon
-                            name="trash"
-                            class="mr-1"
-                        />
                         Delete Area
                     </VButton>
                 </VFlex>

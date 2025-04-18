@@ -28,12 +28,12 @@ export const useAuthStore = defineStore(
 
         return {
             token,
+            firebaseToken,
+            user,
             setToken,
             logout,
-            firebaseToken,
             setFirebaseToken,
             setUser,
-            user,
         };
     },
     {

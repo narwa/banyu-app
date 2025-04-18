@@ -265,10 +265,6 @@ async function saveChanges() {
                             variant="secondary"
                             size="md"
                         >
-                            <VIcon
-                                name="arrow-left"
-                                class="mr-1"
-                            />
                             Back to List
                         </VButton>
                     </NuxtLink>

@@ -17,6 +17,9 @@ export const useMutationGetMeDetail = (
         mutationFn: () => meService.getMe(),
         ...options,
         onSuccess: async (user) => {
+            // eslint-disable-next-line no-console
+            console.log(user);
+
             authStore.setUser({
                 createdAt: user.createdAt,
                 fullName: user.fullName,
@@ -28,6 +31,9 @@ export const useMutationGetMeDetail = (
                 userTypeId: user.userTypeId,
                 photo: user.photoProfile,
             });
+
+            // eslint-disable-next-line no-console
+            console.log(authStore.user);
         },
     });
 };

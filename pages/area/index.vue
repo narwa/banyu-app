@@ -3,6 +3,7 @@ import type { AreaListResponse } from '~/models/Area';
 import { BreadcrumbBuilder } from '~/builders/BreadcrumbBuilder';
 import { TableColumnBuilder } from '~/builders/TableColumnBuilder';
 
+import VLink from '~/components/base/VLink/VLink.vue';
 import VText from '~/components/base/VText/VText.vue';
 import { useQueryAreaList } from '~/composables/area/queries/useQueryAreaList';
 import { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
@@ -42,11 +43,11 @@ const columns = computed(() =>
             key: 'code',
             sortKey: 'code',
             name: 'Area Code',
-            render: row => h(resolveComponent('VLink'), {
+            render: row => h(VLink, {
                 variant: 'unstyled',
                 class: 'text-gold-500 hover:underline underline-offset-4 decoration-transparent hover:decoration-gold-500 transition-colors duration-300',
-                to: `/area/${row.code}/detail`,
-            }, () => row.code),
+                to: { name: 'area-detail', params: { code: row.code } },
+            }, () => truncateString(row.code, 20)),
         })
         .setColumn({
             key: 'description',
@@ -101,10 +102,6 @@ const handleSearch = () => {
                         variant="primary"
                         size="md"
                     >
-                        <VIcon
-                            name="plus"
-                            class="mr-1"
-                        />
                         Create New Area
                     </VButton>
                 </NuxtLink>
