@@ -101,7 +101,7 @@ export const stringOrNull = (value?: string | null) => typeof value === 'string'
 /**
  * @description format value as string or fallback
  */
-export const stringOrFallback = (value?: string | null, fallback: string = '') => value || fallback;
+export const stringOrFallback = (value: string = '', fallback?: string | null) => value || fallback;
 
 /**
  * @description format value as number or null

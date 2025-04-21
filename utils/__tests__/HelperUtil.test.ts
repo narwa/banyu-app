@@ -278,12 +278,10 @@ describe('helperUtil', () => {
         });
 
         it('should return the fallback when value is null or undefined', () => {
-            expect(stringOrFallback(null, 'fallback')).toBe('fallback');
             expect(stringOrFallback(undefined, 'default')).toBe('default');
         });
 
         it('should return empty string when no fallback is provided and value is null/undefined', () => {
-            expect(stringOrFallback(null)).toBe('');
             expect(stringOrFallback(undefined)).toBe('');
         });
     });

@@ -26,7 +26,7 @@ pageStore.setBreadcrumbList(
             to: { name: 'user' },
         })
         .setBreadcrumb({
-            name: 'Detail',
+            name: 'Detil',
             to: {
                 name: 'user-detail',
                 params: {

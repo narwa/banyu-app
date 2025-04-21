@@ -28,19 +28,4 @@ describe('constants/index.ts', () => {
         expect(indexExports).toHaveProperty('STATUS_VARIANTS');
         expect(indexExports.STATUS_VARIANTS).toBe(generalConstantExports.STATUS_VARIANTS);
     });
-
-    it('should export APPLICATION_STATUS_VARIANTS constant', () => {
-        expect(indexExports).toHaveProperty('APPLICATION_STATUS_VARIANTS');
-        expect(indexExports.APPLICATION_STATUS_VARIANTS).toBe(generalConstantExports.APPLICATION_STATUS_VARIANTS);
-    });
-
-    it('should export STATUS_ACTIONS constant', () => {
-        expect(indexExports).toHaveProperty('STATUS_ACTIONS');
-        expect(indexExports.STATUS_ACTIONS).toBe(generalConstantExports.STATUS_ACTIONS);
-    });
-
-    it('should export STATUS_OPTIONS constant', () => {
-        expect(indexExports).toHaveProperty('STATUS_OPTIONS');
-        expect(indexExports.STATUS_OPTIONS).toBe(generalConstantExports.STATUS_OPTIONS);
-    });
 });

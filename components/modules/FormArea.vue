@@ -62,34 +62,6 @@ const schema = yup.object({
     })).required('Tarif harus diisi'),
 });
 
-const { handleSubmit } = useForm({
-    validationSchema: toTypedSchema(schema),
-});
-
-const addRate = () => {
-    state.rates.push({
-        tierStart: 0,
-        tierEnd: 0,
-        ratePerUnit: 0,
-    });
-};
-
-const onSubmit = handleSubmit(async () => {
-    const stateArea = () => {
-        return new AreaDto()
-            .setCode(stringOrEmpty(state.code))
-            .setDescription(stringOrEmpty(state.description))
-            .setRates(isArrayEmpty(state.rates));
-    };
-
-    if (data) {
-        updateArea(stateArea());
-        return;
-    }
-
-    createArea(stateArea());
-});
-
 const columns = computed(() =>
     new TableColumnBuilder<Rate>()
         .setColumn({
@@ -133,12 +105,40 @@ const columns = computed(() =>
         })
         .build(),
 );
+
+const { handleSubmit } = useForm({
+    validationSchema: toTypedSchema(schema),
+});
+
+const addRate = () => {
+    state.rates.push({
+        tierStart: 0,
+        tierEnd: 0,
+        ratePerUnit: 0,
+    });
+};
+
+const onSubmit = handleSubmit(async () => {
+    const stateArea = () => {
+        return new AreaDto()
+            .setCode(stringOrEmpty(state.code))
+            .setDescription(stringOrEmpty(state.description))
+            .setRates(isArrayEmpty(state.rates));
+    };
+
+    if (data) {
+        updateArea(stateArea());
+        return;
+    }
+
+    createArea(stateArea());
+});
 </script>
 
 <template>
     <form @submit.prevent="onSubmit">
         <VCard
-            title="Form Konfigurasi Umum"
+            title="Form Area"
             class="h-full"
         >
             <VFlex

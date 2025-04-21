@@ -73,7 +73,7 @@ const onSubmit = handleSubmit(async () => {
         return;
     }
 
-    await createGeneralConfig(stateGeneralConfig());
+    createGeneralConfig(stateGeneralConfig());
 });
 </script>
 

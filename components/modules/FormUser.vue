@@ -56,7 +56,7 @@ const { mutate: updateUser, isPending: isPendingUpdateUser } = useMutationUserUp
 
 const params = reactive(new PaginationSearchParam());
 const searchCount = shallowRef<number>(0);
-const { values: areaList } = useQueryAreaList(params, searchCount);
+const { values: areaList, isLoading: isLoadingAreaList } = useQueryAreaList(params, searchCount);
 const userTypeList = Object.values(USER_TYPE);
 
 const schema = yup.object({
@@ -144,6 +144,7 @@ const onSubmit = handleSubmit(async () => {
                     size="lg"
                     required
                     clearable
+                    :loading="isLoadingAreaList"
                 />
             </VFlex>
             <VFlex

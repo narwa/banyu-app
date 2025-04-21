@@ -26,7 +26,7 @@ pageStore.setBreadcrumbList(
             to: { name: 'general-config' },
         })
         .setBreadcrumb({
-            name: 'Detail',
+            name: 'Detil',
             to: {
                 name: 'general-config-detail',
                 params: {
