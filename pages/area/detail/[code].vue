@@ -25,7 +25,7 @@ pageStore.setBreadcrumbList(
             to: '/area',
         })
         .setBreadcrumb({
-            name: 'Area Detail',
+            name: 'Area Detil',
         })
         .build(),
 );
@@ -116,13 +116,13 @@ const handleDelete = handleArchiveConfirmation(async () => {
                     title="Kode"
                     title-class="text-secondary"
                 >
-                    {{ stringOrEmpty(areaDetail.code) }}
+                    {{ stringOrFallback(areaDetail.code, '-') }}
                 </VDescription>
                 <VDescription
                     title="Deskripsi"
                     title-class="text-secondary"
                 >
-                    {{ stringOrEmpty(areaDetail.description) }}
+                    {{ stringOrFallback(areaDetail.description, '-') }}
                 </VDescription>
             </VGrid>
             <VTable

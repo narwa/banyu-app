@@ -1,4 +1,4 @@
-import type { ApplicationStatus, ContentStatus, DashboardMenu, ErrorType, StatusAction, StatusOption, StatusVariants, UserType } from '~/types';
+import type { DashboardMenu, ErrorType, Status, StatusVariants, UserType } from '~/types';
 
 export const ERROR_LIST: ErrorType[] = [
     {
@@ -50,7 +50,13 @@ export const DASHBOARD_MENUS: DashboardMenu[] = [
                 name: 'User',
                 hrefName: 'user',
                 path: '/user',
-                icon: 'lucide:user',
+                icon: 'lucide:users',
+            },
+            {
+                name: 'Member',
+                hrefName: 'member',
+                path: '/member',
+                icon: 'lucide:book-user',
             },
         ],
     },
@@ -74,63 +80,12 @@ export const DASHBOARD_MENUS: DashboardMenu[] = [
     },
 ] as const;
 
-export const STATUS_VARIANTS: Record<ContentStatus, StatusVariants> = {
-    DRAFT: 'warning',
-    PUBLISHED: 'success',
-    ARCHIVED: 'danger',
+export const STATUS = {
+    ACTIVE: 'ACTIVE',
+    INACTIVE: 'INACTIVE',
 } as const;
 
-export const APPLICATION_STATUS_VARIANTS: Record<ApplicationStatus, StatusVariants> = {
-    ACCEPTED: 'success',
-    INTERVIEWING: 'info',
-    OFFERED: 'indigo',
-    REJECTED: 'danger',
-    REVIEWED: 'warning',
-    TECHNICAL_TEST: 'pink',
-    SUBMITTED: 'primary',
+export const STATUS_VARIANTS: Record<Status, StatusVariants> = {
+    ACTIVE: 'success',
+    INACTIVE: 'danger',
 } as const;
-
-export const APPLICATION_STATUS = {
-    SUBMITTED: 'SUBMITTED',
-    REVIEWED: 'REVIEWED',
-    REJECTED: 'REJECTED',
-    TECHNICAL_TEST: 'TECHNICAL_TEST',
-    INTERVIEWING: 'INTERVIEWING',
-    OFFERED: 'OFFERED',
-    ACCEPTED: 'ACCEPTED',
-} as const;
-
-export const STATUS_ACTIONS: Record<ContentStatus, readonly StatusAction[]> = {
-    PUBLISHED: [
-        {
-            label: 'Archive',
-            name: 'ARCHIVED',
-            variant: STATUS_VARIANTS.ARCHIVED,
-            icon: 'lucide:archive',
-        },
-    ],
-    ARCHIVED: [
-        {
-            label: 'Publish',
-            name: 'PUBLISHED',
-            variant: 'primary',
-            icon: 'lucide:circle-plus',
-        },
-    ],
-    DRAFT: [
-        {
-            label: 'Publish',
-            name: 'PUBLISHED',
-            variant: 'primary',
-            icon: 'lucide:circle-plus',
-        },
-    ],
-} as const;
-
-export const STATUS_OPTIONS: StatusOption[] = [
-    { label: 'Reviewed', value: 'REVIEWED' },
-    { label: 'Technical Test', value: 'TECHNICAL_TEST' },
-    { label: 'Interviewed', value: 'INTERVIEWING' },
-    { label: 'Offering', value: 'OFFERED' },
-    { label: 'Pass', value: 'ACCEPTED' },
-];

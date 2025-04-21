@@ -25,7 +25,7 @@ pageStore.setBreadcrumbList(
             to: { name: 'user' },
         })
         .setBreadcrumb({
-            name: 'Pengguna Detail',
+            name: 'Pengguna Detil',
         })
         .build(),
 );

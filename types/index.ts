@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import type { APPLICATION_STATUS, USER_TYPE } from '~/constants';
+import type { STATUS, USER_TYPE } from '~/constants';
 
 export type SetupModule = (app: App<Element>) => void;
 export type ObjectValues<Type> = Type[keyof Type];
@@ -45,12 +45,6 @@ export type LoginResponse = {
     token: string;
 };
 
-export type ContentStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
-export type StatusVariants = 'success' | 'warning' | 'danger' | 'primary' | 'indigo' | 'info' | 'secondary' | 'pink';
-export type BucketType = 'PRIVATE' | 'PUBLIC';
-export type ContentType = 'BLOG' | 'PORTFOLIO' | 'CAREER' | 'LEGAL' | 'OTHER';
-export type MediaType = 'IMAGE' | 'VIDEO' | 'DOCUMENT';
-export type UserType = typeof USER_TYPE[keyof typeof USER_TYPE];
 export type GeneralSeo = {
     metaTitle: string;
     metaDescription: string;
@@ -59,15 +53,19 @@ export type GeneralSeo = {
     ogDescription: string;
     ogImage: string;
 };
+
 export type StatusAction = {
     name: ContentStatus;
     label: string;
     variant: StatusVariants;
     icon: string;
 };
-export type ApplicationStatus = typeof APPLICATION_STATUS[keyof typeof APPLICATION_STATUS];
 
-export type StatusOption = {
-    label: string;
-    value: ApplicationStatus;
-};
+export type ContentStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+export type StatusVariants = 'success' | 'warning' | 'danger' | 'primary' | 'indigo' | 'info' | 'secondary' | 'pink';
+export type BucketType = 'PRIVATE' | 'PUBLIC';
+export type ContentType = 'BLOG' | 'PORTFOLIO' | 'CAREER' | 'LEGAL' | 'OTHER';
+export type MediaType = 'IMAGE' | 'VIDEO' | 'DOCUMENT';
+
+export type Status = typeof STATUS[keyof typeof STATUS];
+export type UserType = typeof USER_TYPE[keyof typeof USER_TYPE];

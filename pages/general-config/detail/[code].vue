@@ -23,7 +23,7 @@ pageStore.setBreadcrumbList(
             to: { name: 'general-config' },
         })
         .setBreadcrumb({
-            name: 'Konfigurasi Umum Detail',
+            name: 'Konfigurasi Umum Detil',
         })
         .build(),
 );
@@ -93,19 +93,19 @@ const handleDelete = handleArchiveConfirmation(async () => {
                     title="Kode"
                     title-class="text-secondary"
                 >
-                    {{ stringOrEmpty(generalConfigDetail.code) }}
+                    {{ stringOrFallback(generalConfigDetail.code, '-') }}
                 </VDescription>
                 <VDescription
                     title="Tipe Data"
                     title-class="text-secondary"
                 >
-                    {{ stringOrEmpty(generalConfigDetail.dataType) }}
+                    {{ stringOrFallback(generalConfigDetail.dataType, '-') }}
                 </VDescription>
                 <VDescription
                     title="Nilai"
                     title-class="text-secondary"
                 >
-                    {{ stringOrEmpty(generalConfigDetail.value) }}
+                    {{ stringOrFallback(generalConfigDetail.value, '-') }}
                 </VDescription>
             </VGrid>
         </VCard>
