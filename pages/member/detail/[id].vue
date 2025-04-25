@@ -132,7 +132,7 @@ const handleDelete = handleArchiveConfirmation(async () => {
                     title-class="text-secondary"
                 >
                     {{
-                        formatEpochToDateTime(
+                        formatEpochToDate(
                             memberDetail.meterInstallationDate,
                         )
                     }}
@@ -141,7 +141,7 @@ const handleDelete = handleArchiveConfirmation(async () => {
                     title="Terakhir Diubah"
                     title-class="text-secondary"
                 >
-                    {{ formatEpochToDateTime(memberDetail.lastModifiedDate) }}
+                    {{ formatEpochToDate(memberDetail.lastModifiedDate) }}
                 </VDescription>
                 <VDescription
                     title="Status"

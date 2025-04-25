@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import type { STATUS, USER_TYPE } from '~/constants';
+import type { READING_STATUS, STATUS, USER_TYPE } from '~/constants';
 
 export type SetupModule = (app: App<Element>) => void;
 export type ObjectValues<Type> = Type[keyof Type];
@@ -69,3 +69,4 @@ export type MediaType = 'IMAGE' | 'VIDEO' | 'DOCUMENT';
 
 export type Status = typeof STATUS[keyof typeof STATUS];
 export type UserType = typeof USER_TYPE[keyof typeof USER_TYPE];
+export type ReadingStatus = typeof READING_STATUS[keyof typeof READING_STATUS];
