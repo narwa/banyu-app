@@ -50,13 +50,13 @@ const columns = computed(() =>
             }, () => truncateString(row.areaCode, 20)),
         })
         .setColumn({
-            key: 'areaCode',
-            sortKey: 'areaCode',
+            key: 'meterNumber',
+            sortKey: 'meterNumber',
             name: 'No Meter',
             render: row => h(VText, {
                 as: 'p',
                 variant: 'base',
-            }, () => stringOrFallback(row.areaCode, '-')),
+            }, () => stringOrFallback(row.meterNumber, '-')),
         })
         .setColumn({
             key: 'areaDescription',
