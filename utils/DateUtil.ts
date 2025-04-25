@@ -34,12 +34,20 @@ export const today = () => dayjs().startOf('day').toDate();
 export const toEpochSecond = (date?: number) => date ? date * 1000 : Math.floor(dayjs(date).valueOf());
 
 /**
- * @description A formatted date to epoch.
+ * @description A formatted date time to epoch.
  */
 
 export const formatEpochToDateTime = (date: number | Date): string => {
     const epochMs = typeof date === 'number' && date < 1e12 ? date * 1000 : date;
     return dayjs(epochMs).local().format('DD MMM YYYY hh:mm:ss');
+};
+/**
+ * @description A formatted date to epoch.
+ */
+
+export const formatEpochToDate = (date: number | Date): string => {
+    const epochMs = typeof date === 'number' && date < 1e12 ? date * 1000 : date;
+    return dayjs(epochMs).local().format('DD MMM YYYY');
 };
 
 export const convertEpochToDate = (epoch: number): Date => {

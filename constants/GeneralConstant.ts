@@ -1,4 +1,19 @@
-import type { DashboardMenu, ErrorType, Status, StatusVariants, UserType } from '~/types';
+import type { DashboardMenu, ErrorType, ReadingStatus, Status, StatusVariants, UserType } from '~/types';
+
+export const MONTH = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juni',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember',
+] as const;
 
 export const ERROR_LIST: ErrorType[] = [
     {
@@ -65,16 +80,22 @@ export const DASHBOARD_MENUS: DashboardMenu[] = [
         requireAdmin: true,
         children: [
             {
-                name: 'Konfigurasi Umum',
-                hrefName: 'general-config',
-                path: '/general-config',
-                icon: 'lucide:settings',
-            },
-            {
                 name: 'Area',
                 hrefName: 'area',
                 path: '/area',
                 icon: 'lucide:map-pin',
+            },
+            {
+                name: 'Pembacaan Meteran',
+                hrefName: 'meter-reading',
+                path: '/meter-reading',
+                icon: 'lucide:ruler',
+            },
+            {
+                name: 'Konfigurasi Umum',
+                hrefName: 'general-config',
+                path: '/general-config',
+                icon: 'lucide:settings',
             },
         ],
     },
@@ -88,4 +109,16 @@ export const STATUS = {
 export const STATUS_VARIANTS: Record<Status, StatusVariants> = {
     ACTIVE: 'success',
     INACTIVE: 'danger',
+} as const;
+
+export const READING_STATUS = {
+    INITIAL: 'INITIAL',
+    READ: 'READ',
+    CALCULATE: 'CALCULATE',
+} as const;
+
+export const READING_STATUS_VARIANTS: Record<ReadingStatus, StatusVariants> = {
+    INITIAL: 'success',
+    READ: 'info',
+    CALCULATE: 'primary',
 } as const;
