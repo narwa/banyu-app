@@ -72,4 +72,4 @@ yarn preview
 bun run preview
 ```
 
-kata
+test
