@@ -1,18 +1,54 @@
-import type { DashboardMenu, ErrorType, ReadingStatus, Status, StatusVariants, UserType } from '~/types';
+import type { DashboardMenu, ErrorType, SelectOption, Status, StatusVariants, UserType, WaterReadingStatus } from '~/types';
 
-export const MONTH = [
-    'Januari',
-    'Februari',
-    'Maret',
-    'April',
-    'Mei',
-    'Juni',
-    'Juni',
-    'Agustus',
-    'September',
-    'Oktober',
-    'November',
-    'Desember',
+export const MONTH: SelectOption<number, string>[] = [
+    {
+        value: 1,
+        label: 'Januari',
+    },
+    {
+        value: 2,
+        label: 'Februari',
+    },
+    {
+        value: 3,
+        label: 'Maret',
+    },
+    {
+        value: 4,
+        label: 'April',
+    },
+    {
+        value: 5,
+        label: 'Mei',
+    },
+    {
+        value: 6,
+        label: 'Juni',
+    },
+    {
+        value: 7,
+        label: 'Juni',
+    },
+    {
+        value: 8,
+        label: 'Agustus',
+    },
+    {
+        value: 9,
+        label: 'September',
+    },
+    {
+        value: 10,
+        label: 'Oktober',
+    },
+    {
+        value: 11,
+        label: 'November',
+    },
+    {
+        value: 12,
+        label: 'Desember',
+    },
 ] as const;
 
 export const ERROR_LIST: ErrorType[] = [
@@ -111,14 +147,14 @@ export const STATUS_VARIANTS: Record<Status, StatusVariants> = {
     INACTIVE: 'danger',
 } as const;
 
-export const READING_STATUS = {
+export const METER_READING_STATUS = {
     INITIAL: 'INITIAL',
     READ: 'READ',
     CALCULATE: 'CALCULATE',
 } as const;
 
-export const READING_STATUS_VARIANTS: Record<ReadingStatus, StatusVariants> = {
-    INITIAL: 'success',
-    READ: 'info',
-    CALCULATE: 'primary',
+export const METER_READING_STATUS_VARIANTS: Record<WaterReadingStatus, StatusVariants> = {
+    INITIAL: 'primary',
+    READ: 'indigo',
+    CALCULATE: 'success',
 } as const;

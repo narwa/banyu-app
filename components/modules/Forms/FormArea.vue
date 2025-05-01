@@ -4,10 +4,10 @@ import { useForm } from 'vee-validate';
 import { toast } from 'vue-sonner';
 import * as yup from 'yup';
 import { TableColumnBuilder } from '~/builders/TableColumnBuilder';
+import VInput from '~/components/base/VInput/VInput.vue';
 import { useMutationAreaCreate } from '~/composables/area/mutations/useMutationAreaCreate';
 import { useMutationAreaUpdate } from '~/composables/area/mutations/useMutationAreaUpdate';
 import { AreaDto } from '~/models/dtos/AreaDto';
-import VInput from '../base/VInput/VInput.vue';
 
 const { data, action } = defineProps<{
     data?: AreaDetailResponse;

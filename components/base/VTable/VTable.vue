@@ -1,13 +1,14 @@
 <script setup lang="ts" generic="TData extends object">
 import type { HTMLAttributes } from 'vue';
 import type { SortDirection, TableColumn, TableRowSelection } from '.';
+import type { SelectOption } from '~/types';
 import { SORT_DIRECTION, tableCellVariants, tableColumnVariants, tableHeadVariants, tableRowVariants } from '.';
 
 type Props = {
     title?: string;
     entries: TData[];
     columns: TableColumn<TData>[];
-    perPageOptions?: number[];
+    perPageOptions?: SelectOption<number, string>[];
     total?: number;
     loading?: boolean;
     cardable?: boolean;
@@ -54,7 +55,26 @@ const isAscending = shallowRef<boolean>(
 const entries = computed<TData[]>(() => props.entries ?? []);
 
 const shouldShowPagination = computed(() => !props.loading && total > perPage.value);
-const perPageOptions = computed(() => Array.isArray(props.perPageOptions) ? props.perPageOptions : [10, 20, 30, 50, 75, 100]);
+const perPageOptions = computed<SelectOption<number, string>[]>(() => {
+    const defaultPerPages: SelectOption<number, string>[] = [{
+        label: '10',
+        value: 10,
+    }, {
+        label: '20',
+        value: 20,
+    }, {
+        label: '30',
+        value: 30,
+    }, {
+        label: '40',
+        value: 40,
+    }, {
+        label: '50',
+        value: 50,
+    }];
+
+    return props.perPageOptions ?? defaultPerPages;
+});
 
 const startResult = computed(
     () => currentPage.value * perPage.value - perPage.value + (entries.value.length ? 1 : 0),
@@ -104,9 +124,9 @@ function isRowChecked(entry: TData) {
     return selectedRowList.value.some(row => row[key] === entry[key]);
 }
 
-function handleChangeLimit(value?: number) {
+function handleChangeLimit(value?: string | number) {
     currentPage.value = 1;
-    emits('perPageChange', value ?? 1);
+    emits('perPageChange', value ? Number(value) : 1);
 }
 
 function handleSortColumn(columnKey?: string) {
@@ -442,6 +462,8 @@ const extractCellClass = (column: TableColumn<TData>, entry: TData) => typeof co
                             v-model="perPage"
                             name="tablePerPage"
                             :options="perPageOptions"
+                            label-key="label"
+                            value-key="value"
                             :allow-empty="false"
                             :searchable="false"
                             @change="handleChangeLimit"

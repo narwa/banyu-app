@@ -2,12 +2,13 @@
 import type { MeterReadingListResponse } from '~/models/MeterReading';
 import { BreadcrumbBuilder } from '~/builders/BreadcrumbBuilder';
 import { TableColumnBuilder } from '~/builders/TableColumnBuilder';
+import VAccordion from '~/components/base/VAccordion/VAccordion.vue';
 import VBadge from '~/components/base/VBadge/VBadge.vue';
 import VLink from '~/components/base/VLink/VLink.vue';
 import VText from '~/components/base/VText/VText.vue';
 import { useQueryMeterReadingList } from '~/composables/meter-reading/queries/useQueryMeterReadingList';
 import { MeterReadingPaginationSearchParams } from '~/models/params/MeterReadingPaginationSearchParams';
-import { MONTH, READING_STATUS, READING_STATUS_VARIANTS } from '../../constants/GeneralConstant';
+import { METER_READING_STATUS, METER_READING_STATUS_VARIANTS, MONTH } from '../../constants/GeneralConstant';
 
 definePageMeta({
     layout: false,
@@ -35,6 +36,9 @@ const search = reactive({
     count: 0,
     fullName: '',
 });
+const modal = reactive({
+    calculate: false,
+});
 
 const { results, total, isLoading } = useQueryMeterReadingList(params, search.count);
 
@@ -51,6 +55,24 @@ const columns = computed(() =>
             }, () => truncateString(row.meterNumber, 20)),
         })
         .setColumn({
+            key: 'areaCode',
+            sortKey: 'areaCode',
+            name: 'Kode Area',
+            render: row => h(VText, {
+                as: 'p',
+                variant: 'base',
+            }, () => stringOrFallback(row.areaCode)),
+        })
+        .setColumn({
+            key: 'memberFullName',
+            sortKey: 'memberFullName',
+            name: 'Nama Member',
+            render: row => h(VText, {
+                as: 'p',
+                variant: 'base',
+            }, () => stringOrFallback(row.memberFullName)),
+        })
+        .setColumn({
             key: 'readingDate',
             sortKey: 'readingDate',
             name: 'Tanggal Pembacaan',
@@ -58,15 +80,6 @@ const columns = computed(() =>
                 as: 'p',
                 variant: 'base',
             }, () => formatEpochToDate(row.readingDate)),
-        })
-        .setColumn({
-            key: 'readingStatus',
-            sortKey: 'readingStatus',
-            name: 'Status',
-            render: row => h(VBadge, {
-                variant: READING_STATUS_VARIANTS[row.readingStatus],
-                class: 'w-max',
-            }, () => READING_STATUS[row.readingStatus]),
         })
         .setColumn({
             key: 'consumption',
@@ -93,25 +106,16 @@ const columns = computed(() =>
             render: row => h(VText, {
                 as: 'p',
                 variant: 'base',
-            }, () => MONTH[row.month]),
+            }, () => MONTH[row.month - 1].label),
         })
         .setColumn({
-            key: 'areaCode',
-            sortKey: 'areaCode',
-            name: 'Kode Area',
-            render: row => h(VText, {
-                as: 'p',
-                variant: 'base',
-            }, () => stringOrFallback(row.areaCode)),
-        })
-        .setColumn({
-            key: 'memberFullName',
-            sortKey: 'memberFullName',
-            name: 'Nama Lengkap Member',
-            render: row => h(VText, {
-                as: 'p',
-                variant: 'base',
-            }, () => stringOrFallback(row.memberFullName)),
+            key: 'readingStatus',
+            sortKey: 'readingStatus',
+            name: 'Status',
+            render: row => h(VBadge, {
+                variant: METER_READING_STATUS_VARIANTS[row.readingStatus],
+                class: 'w-max',
+            }, () => METER_READING_STATUS[row.readingStatus]),
         })
         .setColumn({
             key: 'createdDate',
@@ -142,21 +146,50 @@ const columns = computed(() =>
         })
         .build(),
 );
+
+const handleCalculate = () => {
+    modal.calculate = true;
+};
 </script>
 
 <template>
     <NuxtLayout name="default">
         <template #header-actions>
-            <VLink
-                variant="primary"
-                :to="{ name: 'meter-reading-create' }"
+            <VFlex
+                direction="row"
+                gap="4"
             >
-                Tambah Pembacaan Meteran
-                <Icon name="lucide:circle-plus" />
-            </VLink>
+                <VLink
+                    variant="primary"
+                    :to="{ name: 'meter-reading-create' }"
+                >
+                    Tambah Pembacaan Meteran
+                    <Icon name="lucide:circle-plus" />
+                </VLink>
+                <VButton
+                    variant="info"
+                    @click="handleCalculate"
+                >
+                    Kalkulasi
+                    <Icon name="lucide:calculator" />
+                </VButton>
+            </VFlex>
         </template>
 
-        <FilterMeterReading />
+        <VAccordion>
+            <VAccordionItem value="item-1">
+                <template #title>
+                    <p class="text-primary">
+                        Filter
+                    </p>
+                </template>
+                <template #default>
+                    <FilterMeterReading
+                        :params="params"
+                    />
+                </template>
+            </VAccordionItem>
+        </VAccordion>
 
         <VTable
             v-model:sort-key="params.sort"
@@ -168,6 +201,14 @@ const columns = computed(() =>
             :columns="columns"
             :total="total"
             :loading="isLoading"
+            class="mt-4"
         />
+
+        <VDialog
+            v-model:open="modal.calculate"
+            title="Form Kalkukasi Pembacaan Meteran"
+        >
+            <FormCalculateMeterReading @submit="modal.calculate = false" />
+        </VDialog>
     </NuxtLayout>
 </template>

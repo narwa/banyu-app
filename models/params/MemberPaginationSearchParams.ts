@@ -1,9 +1,9 @@
 import type { Undefined } from '~/types';
 import { PaginationSearchParam } from './PaginationSearchParam';
 
-export class UserPaginationSearchParams extends PaginationSearchParam {
+export class MemberPaginationSearchParams extends PaginationSearchParam {
     fullName!: Undefined<string>;
-    username!: Undefined<string>;
+    areaCode!: Undefined<string>;
 
     constructor() {
         super();
@@ -14,8 +14,8 @@ export class UserPaginationSearchParams extends PaginationSearchParam {
         return this;
     }
 
-    setUsername(value: Undefined<string>): this {
-        this.username = value;
+    setAreaCode(value: Undefined<string>): this {
+        this.areaCode = value;
         return this;
     }
 }

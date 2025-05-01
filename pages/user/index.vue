@@ -43,7 +43,7 @@ const columns = computed(() =>
         .setColumn({
             key: 'fullName',
             sortKey: 'fullName',
-            name: 'Nama Pengguna',
+            name: 'Nama Lengkap',
             render: row => h(VLink, {
                 variant: 'unstyled',
                 class: 'text-gold-500 hover:underline underline-offset-4 decoration-transparent hover:decoration-gold-500 transition-colors duration-300',
@@ -70,7 +70,7 @@ const columns = computed(() =>
             render: row => h(VText, {
                 as: 'p',
                 variant: 'base',
-            }, () => formatEpochToDateTime(row.lastLogin)),
+            }, () => row.lastLogin ? formatEpochToDateTime(row.lastLogin) : '-'),
         })
         .setColumn({
             key: 'createdAt',
@@ -85,7 +85,7 @@ const columns = computed(() =>
 );
 
 const handleSearch = () => {
-    params.setFullName(search.fullName)
+    params.setFullname(search.fullName)
         .setFirstPage();
     ++search.count;
 };
@@ -110,7 +110,7 @@ const handleSearch = () => {
                         name="userFullName"
                         type="text"
                         size="md"
-                        placeholder="Cari nama pengguna ..."
+                        placeholder="Cari nama lengkap ..."
                         input-class="border border-gray-700 placeholder:text-gray-700"
                     >
                         <template #prefixIcon>

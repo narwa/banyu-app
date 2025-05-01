@@ -7,7 +7,7 @@ import { useQueryAreaList } from '~/composables/area/queries/useQueryAreaList';
 import { useMutationMemberCreate } from '~/composables/member/mutations/useMutationMemberCreate';
 import { useMutationMemberUpdate } from '~/composables/member/mutations/useMutationMemberUpdate';
 import { MemberDto } from '~/models/dtos/MemberDto';
-import { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
+import { AreaPaginationSearchParams } from '~/models/params/AreaPaginationSearchParams';
 
 const { data, action } = defineProps<{
     data?: MemberDetailResponse;
@@ -17,16 +17,16 @@ const { data, action } = defineProps<{
 const state = reactive({
     ...new MemberDto()
         .setAreaCode(stringOrEmpty(data?.areaCode))
-        .setFullName(stringOrEmpty(data?.fullName))
+        .setFullname(stringOrEmpty(data?.fullName))
         .setEmail(stringOrEmpty(data?.email))
         .setMobileNumber(stringOrEmpty(data?.mobileNumber)),
     id: stringOrEmpty(data?.id),
 });
 
-const params = reactive(new PaginationSearchParam());
+const params = reactive(new AreaPaginationSearchParams());
 const searchCount = shallowRef<number>(0);
 const { showNotification } = useNotification();
-const { values: areaList, isLoading: isLoadingAreaList } = useQueryAreaList(params, searchCount);
+const { results: areaList, isLoading: isLoadingAreaList } = useQueryAreaList(params, searchCount);
 const { mutate: createMember, isPending: isPendingCreateMember } = useMutationMemberCreate({
     onSuccess: (data) => {
         showNotification({
@@ -59,8 +59,8 @@ const { mutate: updateMember, isPending: isPendingUpdateMember } = useMutationMe
 const schema = yup.object({
     codeArea: yup.string().required('Kode area harus diisi'),
     fullName: yup.string().required('Nama lengkap harus diisi'),
-    email: yup.string().email('Format email tidak valid').required('Email harus diisi'),
-    mobileNumber: yup.string().required('No HP harus diisi'),
+    email: yup.string().email('Format email tidak valid'),
+    mobileNumber: yup.string(),
 });
 
 const { handleSubmit } = useForm({
@@ -71,7 +71,7 @@ const onSubmit = handleSubmit(async () => {
     const stateMember = () => {
         return new MemberDto()
             .setAreaCode(stringOrEmpty(state.codeArea))
-            .setFullName(stringOrEmpty(state.fullName))
+            .setFullname(stringOrEmpty(state.fullName))
             .setEmail(stringOrEmpty(state.email))
             .setMobileNumber(stringOrEmpty(state.mobileNumber));
     };
@@ -100,6 +100,8 @@ const onSubmit = handleSubmit(async () => {
                     name="codeArea"
                     label="Pilih Kode Area"
                     :options="areaList"
+                    value-key="code"
+                    label-key="code"
                     placeholder="Mohon pilih kode area"
                     size="lg"
                     required
@@ -119,7 +121,7 @@ const onSubmit = handleSubmit(async () => {
                     placeholder="example@gmail.com"
                     name="email"
                     label="Email"
-                    required
+                    :required="false"
                     type="email"
                     :disabled="action === 'update'"
                 />
@@ -128,7 +130,7 @@ const onSubmit = handleSubmit(async () => {
                     placeholder="Masukan no handphone"
                     name="mobileNumber"
                     label="No HP"
-                    required
+                    :required="false"
                     :maska-options="{
                         mask: ['+62 ### #### ####'],
                     }"

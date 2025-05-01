@@ -1,13 +1,13 @@
 import type { MemberDto } from '~/models/dtos/MemberDto';
 import type { MemberDetailResponse, MemberListResponse, MemberResponse } from '~/models/Member';
-import type { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
+import type { MemberPaginationSearchParams } from '~/models/params/MemberPaginationSearchParams';
 import type { MemberService } from '~/services/MemberService';
 import type { GenericPagination } from '~/types';
 import { useNuxtApp } from '#app';
 import { MemberEndpoint } from '~/endpoints/MemberEndpoint';
 
 export class MemberServiceImpl implements MemberService {
-    async getMemberList(params: PaginationSearchParam): Promise<GenericPagination<MemberListResponse[]>> {
+    async getMemberList(params: MemberPaginationSearchParams): Promise<GenericPagination<MemberListResponse[]>> {
         return await useNuxtApp().$api<GenericPagination<MemberListResponse[]>>(MemberEndpoint.LIST, {
             query: {
                 ...params,

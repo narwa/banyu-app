@@ -1,12 +1,12 @@
 import type { UseQueryOptions } from '@tanstack/vue-query';
 import type { MemberListResponse } from '~/models/Member';
-import type { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
+import type { MemberPaginationSearchParams } from '~/models/params/MemberPaginationSearchParams';
 import type { GenericPagination } from '~/types';
 import { useQuery } from '@tanstack/vue-query';
 import { MemberServiceImpl } from '~/services/impl/MemberServiceImpl';
 
 export const useQueryMemberList = (
-    params: PaginationSearchParam,
+    params: MemberPaginationSearchParams,
     searchCount: MaybeRef<number>,
     options?: UseQueryOptions<GenericPagination<MemberListResponse[]>>,
 ) => {

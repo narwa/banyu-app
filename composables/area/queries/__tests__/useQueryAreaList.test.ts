@@ -2,7 +2,7 @@ import type { VueWrapper } from '@vue/test-utils';
 import { flushPromises, shallowMount } from '@vue/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defineComponent, reactive, ref } from 'vue';
-import { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
+import { AreaPaginationSearchParams } from '~/models/params/AreaPaginationSearchParams';
 import { AreaServiceImpl } from '~/services/impl/AreaServiceImpl';
 import { useQueryAreaList } from '../useQueryAreaList';
 
@@ -25,7 +25,7 @@ const spyOnGetAreaList = vi.spyOn(AreaServiceImpl.prototype, 'getAreaList').mock
 describe('useQueryAreaList', () => {
     const useQueryAreaListComponent = defineComponent({
         setup() {
-            const params = reactive(new PaginationSearchParam());
+            const params = reactive(new AreaPaginationSearchParams());
             const searchCount = ref(0);
 
             const { data, total, results, ...query } = useQueryAreaList(params, searchCount);

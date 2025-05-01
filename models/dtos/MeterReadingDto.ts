@@ -1,6 +1,6 @@
 export class MeterReadingDto {
     meterNumber!: string;
-    readingDate!: number;
+    readingDate!: number | Date;
     previousReading!: number;
     currentReading!: number;
     notes!: string;
@@ -11,7 +11,7 @@ export class MeterReadingDto {
         return this;
     }
 
-    setReadingDate(readingDate: number): this {
+    setReadingDate(readingDate: number | Date): this {
         this.readingDate = readingDate;
         return this;
     }

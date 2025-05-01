@@ -46,7 +46,7 @@ describe('useMutationUserUpdate', () => {
     });
 
     it('should handle update blog correctly', async () => {
-        const payload = new UserDto().setFullName('Eka Yuda 1').setUsername('ecountergg1').setUserType('SUPER_ADMIN').setAreas(['Area 1']);
+        const payload = new UserDto().setFullname('Eka Yuda 1').setUsername('ecountergg1').setUserType('SUPER_ADMIN').setAreas(['Area 1']);
 
         expect(spyOnUpdateUser).toHaveBeenCalledTimes(0);
 
@@ -65,7 +65,7 @@ describe('useMutationUserUpdate', () => {
         const error = new Error('Failed to update blog');
         spyOnUpdateUser.mockRejectedValueOnce(error);
 
-        const payload = new UserDto().setFullName('Eka Yuda 2').setUsername('ecountergg2').setUserType('SUPER_ADMIN').setAreas(['Area 2']);
+        const payload = new UserDto().setFullname('Eka Yuda 2').setUsername('ecountergg2').setUserType('SUPER_ADMIN').setAreas(['Area 2']);
 
         await expect(useMutationUserUpdateWrapper.vm.mutateAsync(payload))
             .rejects
@@ -76,7 +76,7 @@ describe('useMutationUserUpdate', () => {
 
     it('should reset error state after successful mutation', async () => {
         spyOnUpdateUser.mockRejectedValueOnce(new Error('Failed to update blog'));
-        const errorPayload = new UserDto().setFullName('Eka Yuda 3').setUsername('ecountergg3').setUserType('SUPER_ADMIN').setAreas(['Area 3']);
+        const errorPayload = new UserDto().setFullname('Eka Yuda 3').setUsername('ecountergg3').setUserType('SUPER_ADMIN').setAreas(['Area 3']);
 
         await expect(useMutationUserUpdateWrapper.vm.mutateAsync(errorPayload))
             .rejects
@@ -84,7 +84,7 @@ describe('useMutationUserUpdate', () => {
         expect(useMutationUserUpdateWrapper.vm.error).toBeTruthy();
 
         spyOnUpdateUser.mockResolvedValueOnce({ id: '4', username: 'ecountergg4', fullName: 'Eka Yuda 4', type: 'SUPER_ADMIN', photoProfile: '', lastLogin: 0, createdAt: 0, updatedAt: 0, areas: ['Area 4'] });
-        const successPayload = new UserDto().setFullName('Eka Yuda 4').setUsername('ecountergg4').setUserType('SUPER_ADMIN').setAreas(['Area 4']);
+        const successPayload = new UserDto().setFullname('Eka Yuda 4').setUsername('ecountergg4').setUserType('SUPER_ADMIN').setAreas(['Area 4']);
 
         await useMutationUserUpdateWrapper.vm.mutateAsync(successPayload);
         expect(useMutationUserUpdateWrapper.vm.error).toBeNull();
@@ -94,8 +94,8 @@ describe('useMutationUserUpdate', () => {
         spyOnUpdateUser.mockResolvedValueOnce({ id: '5', username: 'ecountergg5', fullName: 'Eka Yuda 5', type: 'SUPER_ADMIN', photoProfile: '', lastLogin: 0, createdAt: 0, updatedAt: 0, areas: ['Area 5'] });
         spyOnUpdateUser.mockResolvedValueOnce({ id: '6', username: 'ecountergg6', fullName: 'Eka Yuda 6', type: 'SUPER_ADMIN', photoProfile: '', lastLogin: 0, createdAt: 0, updatedAt: 0, areas: ['Area 6'] });
 
-        const payload1 = new UserDto().setFullName('Eka Yuda 5').setUsername('ecountergg5').setUserType('SUPER_ADMIN').setAreas(['Area 5']);
-        const payload2 = new UserDto().setFullName('Eka Yuda 6').setUsername('ecountergg6').setUserType('SUPER_ADMIN').setAreas(['Area 6']);
+        const payload1 = new UserDto().setFullname('Eka Yuda 5').setUsername('ecountergg5').setUserType('SUPER_ADMIN').setAreas(['Area 5']);
+        const payload2 = new UserDto().setFullname('Eka Yuda 6').setUsername('ecountergg6').setUserType('SUPER_ADMIN').setAreas(['Area 6']);
 
         await useMutationUserUpdateWrapper.vm.mutateAsync(payload1);
         await useMutationUserUpdateWrapper.vm.mutateAsync(payload2);

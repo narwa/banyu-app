@@ -109,8 +109,10 @@ const handleDelete = handleArchiveConfirmation(async () => {
         <VCard title="Area Detil">
             <VGrid
                 type="cols"
-                sm="3"
-                class="grid-cols-3"
+                md="3"
+                sm="1"
+                gap="4"
+                class="md:grid-cols-3 sm:grid-cols-1"
             >
                 <VDescription
                     title="Kode"

@@ -9,7 +9,7 @@ export class MemberDto {
         return this;
     }
 
-    setFullName(fullName: string): this {
+    setFullname(fullName: string): this {
         this.fullName = fullName;
         return this;
     }

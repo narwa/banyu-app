@@ -8,7 +8,7 @@ import { useMutationUserCreate } from '~/composables/user/mutations/useMutationU
 import { useMutationUserUpdate } from '~/composables/user/mutations/useMutationUserUpdate';
 import { USER_TYPE } from '~/constants';
 import { UserDto } from '~/models/dtos/UserDto';
-import { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
+import { AreaPaginationSearchParams } from '~/models/params/AreaPaginationSearchParams';
 
 const { data, action } = defineProps<{
     data?: UserDetailResponse;
@@ -18,7 +18,7 @@ const { data, action } = defineProps<{
 const state = reactive({
     ...new UserDto()
         .setUsername(stringOrEmpty(data?.username))
-        .setFullName(stringOrEmpty(data?.fullName))
+        .setFullname(stringOrEmpty(data?.fullName))
         .setUserType(valueOrFallback(USER_TYPE.GUEST, data?.type))
         .setAreas(isArrayEmpty(data?.areas)),
     id: stringOrEmpty(data?.id),
@@ -54,10 +54,15 @@ const { mutate: updateUser, isPending: isPendingUpdateUser } = useMutationUserUp
     },
 });
 
-const params = reactive(new PaginationSearchParam());
+const params = reactive(new AreaPaginationSearchParams());
 const searchCount = shallowRef<number>(0);
-const { values: areaList, isLoading: isLoadingAreaList } = useQueryAreaList(params, searchCount);
-const userTypeList = Object.values(USER_TYPE);
+const { results: areaList, isLoading: isLoadingAreaList } = useQueryAreaList(params, searchCount);
+const userTypeList = Object.values(USER_TYPE).map((type) => {
+    return {
+        label: type,
+        value: type,
+    };
+});
 
 const schema = yup.object({
     username: yup.string().email('Format email tidak valid').required('Username harus diisi'),
@@ -85,7 +90,7 @@ const onSubmit = handleSubmit(async () => {
     const stateUser = () => {
         return new UserDto()
             .setUsername(stringOrEmpty(state.username))
-            .setFullName(stringOrEmpty(state.fullName))
+            .setFullname(stringOrEmpty(state.fullName))
             .setUserType(valueOrFallback(USER_TYPE.GUEST, state.userType))
             .setAreas(isArrayEmpty(state.areas));
     };
@@ -130,6 +135,8 @@ const onSubmit = handleSubmit(async () => {
                     label="Pilih Tipe Pengguna"
                     :options="userTypeList"
                     placeholder="Mohon pilih tipe pengguna"
+                    label-key="label"
+                    value-key="value"
                     size="lg"
                     required
                     clearable
@@ -140,6 +147,8 @@ const onSubmit = handleSubmit(async () => {
                     name="areas"
                     label="Pilih Area"
                     :options="areaList"
+                    value-key="code"
+                    label-key="code"
                     placeholder="Mohon pilih area"
                     size="lg"
                     required

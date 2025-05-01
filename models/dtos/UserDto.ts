@@ -6,7 +6,7 @@ export class UserDto {
     userType!: UserType;
     areas!: string[];
 
-    setFullName(fullName: string): this {
+    setFullname(fullName: string): this {
         this.fullName = fullName;
         return this;
     }

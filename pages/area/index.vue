@@ -6,7 +6,7 @@ import { TableColumnBuilder } from '~/builders/TableColumnBuilder';
 import VLink from '~/components/base/VLink/VLink.vue';
 import VText from '~/components/base/VText/VText.vue';
 import { useQueryAreaList } from '~/composables/area/queries/useQueryAreaList';
-import { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
+import { AreaPaginationSearchParams } from '~/models/params/AreaPaginationSearchParams';
 
 definePageMeta({
     layout: false,
@@ -29,7 +29,7 @@ pageStore.setBreadcrumbList(
         .build(),
 );
 
-const params = reactive(new PaginationSearchParam());
+const params = reactive(new AreaPaginationSearchParams());
 const search = reactive({
     count: 0,
     code: '',
@@ -62,6 +62,7 @@ const columns = computed(() =>
 );
 
 const handleSearch = () => {
+    params.setCode(search.code);
     params.setFirstPage();
     ++search.count;
 };

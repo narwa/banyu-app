@@ -6,7 +6,7 @@ import { TableColumnBuilder } from '~/builders/TableColumnBuilder';
 import VLink from '~/components/base/VLink/VLink.vue';
 import VText from '~/components/base/VText/VText.vue';
 import { useQueryMemberList } from '~/composables/member/queries/useQueryMemberList';
-import { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
+import { MemberPaginationSearchParams } from '~/models/params/MemberPaginationSearchParams';
 
 definePageMeta({
     layout: false,
@@ -29,7 +29,7 @@ pageStore.setBreadcrumbList(
         .build(),
 );
 
-const params = reactive(new PaginationSearchParam());
+const params = reactive(new MemberPaginationSearchParams());
 const search = reactive({
     count: 0,
     fullName: '',
@@ -50,13 +50,13 @@ const columns = computed(() =>
             }, () => truncateString(row.areaCode, 20)),
         })
         .setColumn({
-            key: 'areaCode',
-            sortKey: 'areaCode',
+            key: 'meterNumber',
+            sortKey: 'meterNumber',
             name: 'No Meter',
             render: row => h(VText, {
                 as: 'p',
                 variant: 'base',
-            }, () => stringOrFallback(row.areaCode, '-')),
+            }, () => stringOrFallback(row.meterNumber, '-')),
         })
         .setColumn({
             key: 'areaDescription',
@@ -98,6 +98,7 @@ const columns = computed(() =>
 );
 
 const handleSearch = () => {
+    params.setFullname(search.fullName);
     params.setFirstPage();
     ++search.count;
 };

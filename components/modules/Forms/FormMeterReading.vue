@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { MeterReadingDetailResponse } from '~/models/MeterReading';
+import { now } from '@vueuse/core';
 import { useForm } from 'vee-validate';
 import { toast } from 'vue-sonner';
 import * as yup from 'yup';
+import { useQueryMemberList } from '~/composables/member/queries/useQueryMemberList';
 import { useMutationMeterReadingCreate } from '~/composables/meter-reading/mutations/useMutationMeterReadingCreate';
 import { useMutationMeterReadingUpdate } from '~/composables/meter-reading/mutations/useMutationMeterReadingUpdate';
 import { MeterReadingDto } from '~/models/dtos/MeterReadingDto';
+import { MemberPaginationSearchParams } from '~/models/params/MemberPaginationSearchParams';
 
 const { data, action } = defineProps<{
     data?: MeterReadingDetailResponse;
@@ -15,8 +18,8 @@ const { data, action } = defineProps<{
 const state = reactive({
     ...new MeterReadingDto()
         .setMeterNumber(stringOrEmpty(data?.meterNumber))
-        .setReadingDate(numberOrZero(data?.readingDate))
-        .setPreviousReading(numberOrZero(data?.previousReading))
+        .setReadingDate(data ? convertEpochToDate(data.readingDate) : now())
+        .setPreviousReading(numberOrZero(0))
         .setCurrentReading(numberOrZero(data?.currentReading))
         .setNotes(stringOrEmpty(data?.notes))
         .setVersion(numberOrZero(data?.version)),
@@ -24,6 +27,9 @@ const state = reactive({
 });
 
 const { showNotification } = useNotification();
+const memberQueryParams = reactive(new MemberPaginationSearchParams());
+const memberSearchCount = shallowRef<number>(0);
+const { results: memberList, isLoading: isLoadingMemberist } = useQueryMemberList(memberQueryParams, memberSearchCount);
 const { mutate: createMeterReading, isPending: isPendingCreateMeterReading } = useMutationMeterReadingCreate({
     onSuccess: (data) => {
         showNotification({
@@ -54,9 +60,8 @@ const { mutate: updateMeterReading, isPending: isPendingUpdateMeterReading } = u
 });
 
 const schema = yup.object({
-    meterNumber: yup.string().required('Kode harus diisi'),
+    meterNumber: yup.string().required('No meter harus diisi'),
     readingDate: yup.date().required('Tanggal pembacaan harus diisi'),
-    previousReading: yup.number().typeError('Bacaan sebelum harus angka').required('Bacaan sebelum harus diisi'),
     currentReading: yup.number().typeError('Bacaan saat ini harus angka').required('Bacaan saat ini harus diisi'),
     notes: yup.string(),
     version: yup.string(),
@@ -71,7 +76,7 @@ const onSubmit = handleSubmit(async () => {
         return new MeterReadingDto()
             .setMeterNumber(stringOrEmpty(state.meterNumber))
             .setReadingDate(numberOrZero(formatDateToEpoch(state.readingDate)))
-            .setPreviousReading(numberOrZero(state.previousReading))
+            .setPreviousReading(numberOrZero(0))
             .setCurrentReading(numberOrZero(state.currentReading))
             .setNotes(stringOrEmpty(state.notes))
             .setVersion(numberOrZero(state.version));
@@ -96,28 +101,23 @@ const onSubmit = handleSubmit(async () => {
                 direction="col"
                 gap="4"
             >
-                <VInput
-                    v-model="state.meterNumber"
-                    placeholder="Masukan No Meter"
+                <VSelect
+                    v-model:model-value="state.meterNumber"
                     name="meterNumber"
-                    label="No Meter"
-                    required
-                    :disabled="action === 'update'"
+                    label="Pilih Member"
+                    :options="memberList"
+                    placeholder="Mohon pilih member"
+                    value-key="meterNumber"
+                    label-key="fullName"
+                    size="lg"
+                    clearable
+                    :loading="isLoadingMemberist"
                 />
                 <VInputDate
                     v-model="state.readingDate"
                     placeholder="Masukan Tanggal Pembacaan"
                     name="readingDate"
                     label="Tanggal Pembacaan"
-                    required
-                />
-                <VInput
-                    v-model="state.previousReading"
-                    placeholder="Masukan Bacaan Sebelum"
-                    name="previousReading"
-                    label="Bacaan Sebelum"
-                    type="number"
-                    min="0"
                     required
                 />
                 <VInput
@@ -141,6 +141,7 @@ const onSubmit = handleSubmit(async () => {
                     placeholder="Masukan Versi"
                     name="version"
                     label="Versi"
+                    :min="data?.version"
                     type="number"
                     required
                 />
