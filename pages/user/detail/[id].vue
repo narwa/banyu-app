@@ -155,7 +155,7 @@ const handleDelete = handleArchiveConfirmation(async () => {
                             title="Terakhir Login"
                             title-class="text-secondary"
                         >
-                            {{ formatEpochToDateTime(userDetail.lastLogin) }}
+                            {{ userDetail.lastLogin ? formatEpochToDateTime(userDetail.lastLogin) : '-' }}
                         </VDescription>
                         <VDescription
                             title="Tanggal Dibuat"

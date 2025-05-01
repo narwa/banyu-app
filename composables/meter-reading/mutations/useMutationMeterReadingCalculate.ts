@@ -1,19 +1,20 @@
 import type { UseMutationOptions } from '@tanstack/vue-query';
+import type { MeterReadingCalculateDto } from '~/models/dtos/MeterReadingCalculateDto';
 import type { MeterReadingResponse } from '~/models/MeterReading';
 import type { ErrorResponse } from '~/types';
 import { MeterReadingServiceImpl } from '~/services/impl/MeterReadingServiceImpl';
 
-export const useMutationMeterReadingDelete = (
+export const useMutationMeterReadingCalculate = (
     options?: UseMutationOptions<
         MeterReadingResponse,
         ErrorResponse,
-        string,
+        MeterReadingCalculateDto,
         unknown
     >,
 ) => {
     const meterReadingService = new MeterReadingServiceImpl();
     return useMutation({
-        mutationFn: (code: string) => meterReadingService.deleteMeterReading(toValue(code)),
+        mutationFn: (data: MeterReadingCalculateDto) => meterReadingService.calculate(data),
         ...options,
     });
 };

@@ -13,6 +13,20 @@ export default {
             },
         },
         extend: {
+            keyframes: {
+                'slide-down': {
+                    from: { height: '0' },
+                    to: { height: 'var(--radix-accordion-content-height)' },
+                },
+                'slide-up': {
+                    from: { height: 'var(--radix-accordion-content-height)' },
+                    to: { height: '0' },
+                },
+            },
+            animation: {
+                'slide-down': 'slide-down 300ms ease-out',
+                'slide-up': 'slide-up 300ms ease-out',
+            },
             boxShadow: {
                 smooth: '0px 5px 40px rgba(10, 10, 10, 0.1)',
             },

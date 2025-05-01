@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="TData extends string | number">
+<script setup lang="ts" generic="TData extends Record<string, any>">
 import type { HTMLAttributes } from 'vue';
 import type { SelectButtonVariants } from '../VCombobox';
 import type { InputColumnSpanVariants, InputColumnVariants } from '../VInput';
@@ -16,6 +16,8 @@ type Props = {
     layout?: 'horizontal' | 'vertical';
     name: string;
     options: TData[];
+    valueKey?: string;
+    labelKey?: string;
     label?: string;
     placeholder?: string;
     asAsync?: boolean;
@@ -35,48 +37,47 @@ const {
     inlineCols = 12,
     searchable = true,
     asAsync = false,
+    valueKey = 'value',
+    labelKey = 'label',
     ...props
 } = defineProps<Props>();
 
 const emits = defineEmits<{
-    change: [value: TData[]];
+    change: [value: (string | number)[]];
     searchChange: [value?: string];
 }>();
 
 const id = useId();
-
-const state = defineModel<TData[]>({ default: [] });
+const state = defineModel<(string | number)[]>({ default: [] });
 const buttonRef = useTemplateRef<HTMLButtonElement>('buttonRef');
 const shouldShowSelect = ref(false);
 
-const { errorMessage, setValue: setSelectValue } = useField<TData[]>(
+const { errorMessage, setValue: setSelectValue } = useField<(string | number)[]>(
     toRef(props, 'name'),
-    undefined,
-    {
-        initialValue: state.value,
-        validateOnMount: false,
-    },
+undefined,
+{
+    initialValue: state.value,
+    validateOnMount: false,
+},
 );
 
 watch(state, value => setSelectValue(value));
 
-const toggleOption = (option: TData) => {
+const toggleOption = (option: string | number) => {
     if (!state.value)
         state.value = [];
     const exists = state.value.includes(option);
-    const newValue = exists
+    state.value = exists
         ? state.value.filter(o => o !== option)
         : [...state.value, option];
-    state.value = newValue;
-    emits('change', newValue);
+    emits('change', state.value);
 };
 
-const removeSelected = (option: TData) => {
+const removeSelected = (option: string | number) => {
     if (!state.value)
         return;
-    const newValue = state.value.filter(o => o !== option);
-    state.value = newValue;
-    emits('change', newValue);
+    state.value = state.value.filter(o => o !== option);
+    emits('change', state.value);
 };
 </script>
 
@@ -117,36 +118,43 @@ const removeSelected = (option: TData) => {
                             variant="base"
                             role="combobox"
                             :aria-expanded="shouldShowSelect"
-                            :class="cn(selectButtonVariants({ rounded, size, isInvalid: errorMessage ? 'yes' : undefined }))"
                             :disabled="disabled"
+                            :class="cn(
+                                selectButtonVariants({
+                                    rounded,
+                                    size,
+                                    isInvalid: errorMessage ? 'yes' : undefined,
+                                }),
+                            )"
                         >
-                            <template v-if="state?.length">
-                                <div class="flex-1 flex flex-wrap gap-1">
+                            <div class="flex flex-wrap gap-1 flex-1">
+                                <template v-if="state.length">
                                     <span
-                                        v-for="(val, i) in state"
-                                        :key="i"
+                                        v-for="(val, idx) in state"
+                                        :key="idx"
                                         class="inline-flex items-center gap-1 rounded bg-muted-100 px-2 py-0.5 text-sm"
                                     >
-                                        {{ val }}
+                                        {{ options.find(o => o[valueKey] === val)?.[labelKey] ?? val }}
                                         <button
                                             v-if="clearable"
+                                            type="button"
                                             @click.stop="removeSelected(val)"
                                         >
                                             <Icon
                                                 name="lucide:x"
-                                                class="h-3 w-3"
+                                                class="w-3 h-3"
                                             />
                                         </button>
                                     </span>
-                                </div>
-                            </template>
-                            <span
-                                v-else
-                                class="flex-1 text-muted-300"
-                            >{{ placeholder }}</span>
+                                </template>
+                                <span
+                                    v-else
+                                    class="text-muted-300 flex-1"
+                                >{{ placeholder }}</span>
+                            </div>
                             <Icon
                                 name="lucide:chevron-down"
-                                class="ml-2 h-4 w-4 shrink-0 opacity-50"
+                                class="ml-2 w-4 h-4 shrink-0 opacity-50"
                             />
                         </button>
                     </VPopoverTrigger>
@@ -156,29 +164,29 @@ const removeSelected = (option: TData) => {
                         align="start"
                         :style="{ width: `${buttonRef?.clientWidth}px` }"
                     >
-                        <VCommandRoot :name="name">
+                        <VCommandRoot>
                             <VCommandInput
                                 v-if="searchable"
                                 :placeholder="placeholder"
                                 class="h-10 pl-10 pr-3"
                                 icon-class="w-4 h-4"
                                 icon-wrapper-class="pl-3"
-                                @input="(event) => asAsync && emits('searchChange', event.target.value)"
+                                @input="(e) => asAsync && emits('searchChange', e.target.value)"
                             />
                             <VCommandEmpty />
                             <VCommandList>
                                 <VCommandGroup class="p-2">
                                     <VCommandItem
-                                        v-for="(option, index) in options"
-                                        :key="index"
-                                        :value="option"
+                                        v-for="(option, idx) in options"
+                                        :key="idx"
+                                        :value="option[valueKey]"
                                         class="flex items-center justify-between gap-2"
-                                        @select="() => toggleOption(option)"
+                                        @select="() => toggleOption(option[valueKey])"
                                     >
-                                        <span class="flex-1">{{ option }}</span>
+                                        <span class="flex-1">{{ option[labelKey] }}</span>
                                         <Icon
                                             name="lucide:check"
-                                            :class="cn('h-4 w-4', state?.includes(option) ? 'opacity-100' : 'opacity-0')"
+                                            :class="cn('w-4 h-4', state.includes(option[valueKey]) ? 'opacity-100' : 'opacity-0')"
                                         />
                                     </VCommandItem>
                                 </VCommandGroup>

@@ -1,20 +1,20 @@
-import type { ReadingStatus, Undefined } from '~/types';
+import type { Undefined, WaterReadingStatus } from '~/types';
 import { PaginationSearchParam } from './PaginationSearchParam';
 
 export class MeterReadingPaginationSearchParams extends PaginationSearchParam {
-    areaCode!: Undefined<string>;
+    areaCode!: Undefined<string[]>;
     memberId!: Undefined<string>;
     month!: Undefined<number>;
     year!: Undefined<number>;
     dateStart!: Undefined<number>;
     dateEnd!: Undefined<number>;
-    status!: Undefined<ReadingStatus>;
+    status!: Undefined<WaterReadingStatus>;
 
     constructor() {
         super();
     }
 
-    setAreaCode(value: Undefined<string>): this {
+    setAreaCode(value: Undefined<string[]>): this {
         this.areaCode = value;
         return this;
     }
@@ -44,7 +44,7 @@ export class MeterReadingPaginationSearchParams extends PaginationSearchParam {
         return this;
     }
 
-    setStatus(value: Undefined<ReadingStatus>): this {
+    setStatus(value: Undefined<WaterReadingStatus>): this {
         this.status = value;
         return this;
     }

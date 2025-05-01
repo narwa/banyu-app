@@ -1,3 +1,4 @@
+import type { SelectOption } from '~/types';
 import dayjs from '#build/dayjs.imports.mjs';
 
 /**
@@ -87,4 +88,23 @@ export const calculateAge = (birthday: string): number => {
     }
 
     return age;
+};
+
+/**
+ * @description A generate years
+ */
+export const generateYears = (): SelectOption<number, string>[] => {
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 5;
+    const endYear = currentYear + 5;
+
+    const years = [];
+    for (let year = startYear; year <= endYear; year++) {
+        years.push({
+            label: year.toString(),
+            value: year,
+        });
+    }
+
+    return years;
 };

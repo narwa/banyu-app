@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="TData extends  string | number">
+<script setup lang="ts" generic="TData extends Record<string, any>, TValueKey extends keyof TData, TLabelKey extends keyof TData">
 import type { HTMLAttributes } from 'vue';
 import type { SelectButtonVariants } from '../VCombobox';
 import type { InputColumnSpanVariants, InputColumnVariants } from '../VInput';
@@ -16,6 +16,8 @@ type Props = {
     layout?: 'horizontal' | 'vertical';
     name: string;
     options: TData[];
+    valueKey: TValueKey;
+    labelKey: TLabelKey;
     label?: string;
     placeholder?: string;
     asAsync?: boolean;
@@ -35,20 +37,22 @@ const {
     inlineCols = 12,
     searchable = true,
     asAsync = false,
+    valueKey = 'value',
+    labelKey = 'label',
     ...props
 } = defineProps<Props>();
 const emits = defineEmits<{
-    change: [value?: TData];
+    change: [value?: string | number | undefined];
     searchChange: [value?: string];
 }>();
 
 const id = useId();
 
-const state = defineModel<TData>();
+const state = defineModel<string | number | undefined>();
 const buttonRef = useTemplateRef<HTMLButtonElement>('buttonRef');
 const shouldShowSelect = ref<boolean>(false);
 
-const { errorMessage, setValue: setSelectValue } = useField<TData | undefined>(
+const { errorMessage, setValue: setSelectValue } = useField<string | number | undefined>(
     toRef(props, 'name'),
     undefined,
     {
@@ -57,12 +61,28 @@ const { errorMessage, setValue: setSelectValue } = useField<TData | undefined>(
     },
 );
 
+const selectedValue = computed(() => {
+    const findLabelValue = props.options.find(option => option[valueKey] === state.value);
+    if (findLabelValue) {
+        return findLabelValue[labelKey];
+    }
+
+    return '';
+});
+
 watch(state, value => setSelectValue(value));
 </script>
 
 <template>
     <div :class="cn('form__group relative w-full flex flex-col space-y-1')">
-        <div :class="cn(inputColumnVariants({ cols: layout === 'horizontal' && inlineCols ? inlineCols : undefined }), layout === 'horizontal' && 'gap-x-6 items-center')">
+        <div
+            :class="cn(
+                inputColumnVariants({
+                    cols: layout === 'horizontal' && inlineCols ? inlineCols : undefined,
+                }),
+                layout === 'horizontal' && 'gap-x-6 items-center',
+            )"
+        >
             <div
                 v-if="label"
                 :class="
@@ -83,7 +103,6 @@ watch(state, value => setSelectValue(value));
                         :label-for="id"
                         :required="required"
                     />
-
                     <slot name="description">
                         <VFormDescription
                             v-if="description"
@@ -95,6 +114,7 @@ watch(state, value => setSelectValue(value));
                     </slot>
                 </VFlex>
             </div>
+
             <div
                 :class="
                     cn(
@@ -122,16 +142,17 @@ watch(state, value => setSelectValue(value));
                             :disabled="disabled"
                         >
                             <span
-                                v-if="state"
+                                v-if="selectedValue"
                                 class="flex-1"
-                            >{{ state }}</span>
+                            >
+                                {{ selectedValue }}
+                            </span>
                             <span
                                 v-else
-                                :class="cn(
-                                    'flex-1 text-muted-300', {
-                                        'opacity-70 dark:opacity-60': disabled,
-                                        'text-red-400 dark:text-red-300': !!errorMessage,
-                                    })"
+                                :class="cn('flex-1 text-muted-300', {
+                                    'opacity-70 dark:opacity-60': disabled,
+                                    'text-red-400 dark:text-red-300': !!errorMessage,
+                                })"
                             >
                                 {{ placeholder }}
                             </span>
@@ -141,6 +162,7 @@ watch(state, value => setSelectValue(value));
                             />
                         </button>
                     </VPopoverTrigger>
+
                     <VPopoverContent
                         class="p-0 overflow-hidden"
                         align="start"
@@ -164,19 +186,21 @@ watch(state, value => setSelectValue(value));
                                     <VCommandItem
                                         v-for="(option, index) in options"
                                         :key="index"
-                                        :value="option"
+                                        :value="option[valueKey]"
                                         class="flex items-center justify-between gap-2"
                                         @select="(event) => {
-                                            emits('change', event.detail.value as TData);
-                                            shouldShowSelect = !shouldShowSelect
+                                            emits('change', event.detail.value as string | number| undefined);
+                                            shouldShowSelect = !shouldShowSelect;
                                         }"
                                     >
-                                        <span class="flex-1">{{ option }}</span>
+                                        <span class="flex-1">
+                                            {{ option[labelKey] }}
+                                        </span>
                                         <Icon
                                             name="lucide:check"
                                             :class="cn(
                                                 'h-4 w-4',
-                                                option === state ? 'opacity-100' : 'opacity-0',
+                                                option[valueKey] === state ? 'opacity-100' : 'opacity-0',
                                             )"
                                         />
                                     </VCommandItem>
@@ -188,9 +212,7 @@ watch(state, value => setSelectValue(value));
 
                 <div
                     v-if="loading"
-                    :class="
-                        cn(selectLoadingVariants({ rounded }))
-                    "
+                    :class="cn(selectLoadingVariants({ rounded }))"
                 >
                     <VSkeleton :class="cn('w-full h-3 max-w-[75%]')" />
                 </div>

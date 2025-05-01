@@ -1,16 +1,17 @@
 <script setup lang="ts">
+import type { ButtonVariants } from '~/components/base/VButton';
 import { toTypedSchema } from '@vee-validate/yup';
 import * as yup from 'yup';
 
 export type Props = {
-    action: 'approve' | 'reject';
     title: string;
     message?: string;
     confirmText?: string;
     cancelText?: string;
     reason?: boolean;
-    icon: string;
-    label?: string;
+    icon?: string;
+    classHeadingIcon?: string;
+    confirmVariant?: ButtonVariants['variant'];
 };
 
 const props = defineProps<{ params: Props }>();
@@ -20,10 +21,13 @@ const emits = defineEmits<{
 }>();
 
 const reason = shallowRef<string>('');
-const reasonText = computed(() => '...');
+const reasonText = computed(() => 'Reason');
 
-const confirmText = computed(() => props.params.confirmText ?? 'Continue');
-const cancelText = computed(() => props.params.cancelText ?? 'No, Batal');
+const icon = computed(() => props.params.icon ?? 'lucide:trash');
+const confirmText = computed(() => props.params.confirmText ?? 'Ya, Hapus');
+const confirmVariant = computed(() => props.params.confirmVariant ?? 'danger');
+const cancelText = computed(() => props.params.cancelText ?? 'Tidak, Batal');
+const classHeaderIcon = computed(() => props.params.classHeadingIcon ?? 'bg-red-100 text-red-600 dark:text-red-600');
 
 const validationSchema = computed(() =>
     yup.object({
@@ -56,15 +60,25 @@ const handleSubmit = async () => {
         hide-close
         @update:open="emits('resolve', false)"
     >
-        <VFlex class="py-2 px-4 w-full">
-            <div :class="cn('flex flex-col gap-y-2')">
-                <div :class="cn(params.action === 'approve' ? 'bg-green-500' : 'bg-red-500', 'p-3 rounded-full text-white w-12 h-12')">
-                    <Icon
-                        :name="params.icon"
-                        class="ml-[0.2rem]"
+        <VFlex class="flex items-start py-2 px-4 w-full">
+            <div :class="cn('p-2 rounded-full', classHeaderIcon)">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.2em"
+                    height="1.2em"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    :class="cn('w-6 h-6')"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd"
                     />
-                </div>
-                <h5 :class="cn('text-base text-muted-800 font-bold mb-2 dark:text-muted-100')">
+                </svg>
+            </div>
+            <div :class="cn('ml-4 w-full')">
+                <h5 :class="cn('text-base text-muted-800 font-medium mb-2 dark:text-muted-100')">
                     {{ params.title }}
                 </h5>
                 <span
@@ -73,12 +87,11 @@ const handleSubmit = async () => {
                 >
                     <slot>{{ params.message }}</slot>
                 </span>
-                <span class="border-b border-muted-100" />
+
                 <VTextarea
                     v-if="params.reason"
                     v-model="reason"
                     name="reason"
-                    :label="params.label"
                     :placeholder="reasonText"
                     class="mt-2"
                 />
@@ -90,21 +103,21 @@ const handleSubmit = async () => {
                     <VButton
                         variant="secondary"
                         name="btn-cancel"
-                        class="w-full"
+                        class="w-36"
                         data-testid="btn-cancel"
                         @click="$emit('resolve', false)"
                     >
                         {{ cancelText }}
                     </VButton>
                     <VButton
-                        :variant="params.action === 'approve' ? 'primary' : 'danger'"
+                        :variant="confirmVariant"
                         name="btn-confirm"
                         data-testid="btn-confirm"
-                        class="w-full"
+                        class="w-36"
                         :disabled="!isFormValid"
                         @click="handleSubmit"
                     >
-                        {{ confirmText }} <Icon :name="params.icon" />
+                        {{ confirmText }} <Icon :name="icon" />
                     </VButton>
                 </VFlex>
             </div>

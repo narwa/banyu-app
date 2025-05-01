@@ -106,7 +106,7 @@ describe('userServiceImpl', () => {
         it('should create a new user', async () => {
             const userData: UserDto = new UserDto()
                 .setUsername('example@gmail.com')
-                .setFullName('Eka Yuda')
+                .setFullname('Eka Yuda')
                 .setUserType('SUPER_ADMIN')
                 .setAreas(['Area 1', 'Area 2']);
 
@@ -138,7 +138,7 @@ describe('userServiceImpl', () => {
         it('should handle duplicate user creation', async () => {
             const duplicateUserData = new UserDto()
                 .setUsername('example@gmail.com')
-                .setFullName('Eka Yuda')
+                .setFullname('Eka Yuda')
                 .setUserType('SUPER_ADMIN')
                 .setAreas(['Area 1', 'Area 2']);
 
@@ -152,7 +152,7 @@ describe('userServiceImpl', () => {
         it('should update an existing user', async () => {
             const userId = '1';
             const userData: UserDto = new UserDto()
-                .setFullName('Dwi Yudi')
+                .setFullname('Dwi Yudi')
                 .setAreas(['Area 1', 'Area 2']);
             const expectedResponse: UserResponse = {
                 id: '1',
@@ -182,7 +182,7 @@ describe('userServiceImpl', () => {
         it('should handle non-existent user update', async () => {
             const nonExistentId = '999';
             const userData = new UserDto()
-                .setFullName('Dwi Yudi')
+                .setFullname('Dwi Yudi')
                 .setAreas(['Area 1', 'Area 2']);
 
             mockApi.mockRejectedValueOnce(new Error('User not found'));

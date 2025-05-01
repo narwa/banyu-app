@@ -4,7 +4,7 @@ import type { MeterReadingResponse } from '~/models/MeterReading';
 import type { ErrorResponse } from '~/types';
 import { MeterReadingServiceImpl } from '~/services/impl/MeterReadingServiceImpl';
 
-export const useMutationMeterReadingUpdate = (
+export const useMutationMeterReadingCalculateById = (
     id: MaybeRef<string>,
     options?: UseMutationOptions<
         MeterReadingResponse,
@@ -15,7 +15,7 @@ export const useMutationMeterReadingUpdate = (
 ) => {
     const meterReadingService = new MeterReadingServiceImpl();
     return useMutation({
-        mutationFn: (data: MeterReadingDto) => meterReadingService.updateMeterReading(toValue(id), data),
+        mutationFn: (data: MeterReadingDto) => meterReadingService.calculateByIdMeterReading(toValue(id), data),
         ...options,
     });
 };

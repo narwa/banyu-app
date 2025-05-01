@@ -1,4 +1,4 @@
-import type { ReadingStatus } from '~/types';
+import type { WaterReadingStatus } from '~/types';
 
 export type MeterReadingListResponse = {
     id: string;
@@ -7,7 +7,7 @@ export type MeterReadingListResponse = {
     consumption: number;
     month: number;
     year: number;
-    readingStatus: ReadingStatus;
+    readingStatus: WaterReadingStatus;
     areaCode: string;
     memberFullName: string;
     createdDate: number;
@@ -17,11 +17,11 @@ export type MeterReadingListResponse = {
 export type MeterReadingDetailResponse = Omit<MeterReadingListResponse, 'readingStatus'> & {
     areaDescription: string;
     currentReading: number;
+    previousReading: number;
     memberEmail: string;
     memberId: string;
     memberMobileNumber: string;
     notes: string;
-    previousReading: number;
-    status: ReadingStatus;
+    status: WaterReadingStatus;
 };
 export type MeterReadingResponse = MeterReadingListResponse;

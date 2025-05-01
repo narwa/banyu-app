@@ -1,3 +1,4 @@
+import type { MeterReadingCalculateDto } from '~/models/dtos/MeterReadingCalculateDto';
 import type { MeterReadingDto } from '~/models/dtos/MeterReadingDto';
 import type { MeterReadingDetailResponse, MeterReadingListResponse, MeterReadingResponse } from '~/models/MeterReading';
 import type { MeterReadingPaginationSearchParams } from '~/models/params/MeterReadingPaginationSearchParams';
@@ -8,16 +9,23 @@ import { MeterReadingEndpoint } from '~/endpoints/MeterReadingEndpoint';
 
 export class MeterReadingServiceImpl implements MeterReadingService {
     async getMeterReadingList(params: MeterReadingPaginationSearchParams): Promise<GenericPagination<MeterReadingListResponse[]>> {
+        const mapParams = {
+            ...params,
+            areaCode: params.areaCode && params.areaCode?.length > 0 ? params.areaCode.join(',') : undefined,
+            dateStart: params.dateStart ? formatDateToEpoch(params.dateStart) : undefined,
+            dateEnd: params.dateEnd ? formatDateToEpoch(params.dateEnd) : undefined,
+        };
+
         return await useNuxtApp().$api<GenericPagination<MeterReadingListResponse[]>>(MeterReadingEndpoint.LIST, {
             query: {
-                ...params,
+                ...mapParams,
                 page: params.page - 1,
             },
         });
     }
 
     async getMeterReadingDetail(code: string): Promise<MeterReadingDetailResponse> {
-        return await useNuxtApp().$api<MeterReadingDetailResponse>(MeterReadingEndpoint.DETAIL.replace('[code]', code));
+        return await useNuxtApp().$api<MeterReadingDetailResponse>(MeterReadingEndpoint.DETAIL.replace('[id]', code));
     }
 
     createMeterReading(data: MeterReadingDto): Promise<MeterReadingResponse> {
@@ -32,9 +40,9 @@ export class MeterReadingServiceImpl implements MeterReadingService {
         );
     }
 
-    updateMeterReading(code: string, data: MeterReadingDto): Promise<MeterReadingResponse> {
+    updateMeterReading(id: string, data: MeterReadingDto): Promise<MeterReadingResponse> {
         return useNuxtApp().$api<MeterReadingResponse>(
-            MeterReadingEndpoint.UPDATE.replace('[code]', code),
+            MeterReadingEndpoint.UPDATE.replace('[id]', id),
             {
                 method: 'PUT',
                 body: {
@@ -44,11 +52,22 @@ export class MeterReadingServiceImpl implements MeterReadingService {
         );
     }
 
-    deleteMeterReading(code: string): Promise<MeterReadingResponse> {
+    calculate(params: MeterReadingCalculateDto): Promise<MeterReadingResponse> {
         return useNuxtApp().$api<MeterReadingResponse>(
-            MeterReadingEndpoint.DELETE.replace('[code]', code),
+            MeterReadingEndpoint.CALCULATE,
             {
-                method: 'DELETE',
+                method: 'PUT',
+                params,
+            },
+        );
+    }
+
+    calculateByIdMeterReading(id: string, params: MeterReadingDto): Promise<MeterReadingResponse> {
+        return useNuxtApp().$api<MeterReadingResponse>(
+            MeterReadingEndpoint.CALCULATE_BY_ID.replace('[id]', id),
+            {
+                method: 'PUT',
+                params,
             },
         );
     }

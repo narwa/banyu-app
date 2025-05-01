@@ -1,12 +1,12 @@
 import type { UseQueryOptions } from '@tanstack/vue-query';
 import type { AreaListResponse } from '~/models/Area';
-import type { PaginationSearchParam } from '~/models/params/PaginationSearchParam';
+import type { AreaPaginationSearchParams } from '~/models/params/AreaPaginationSearchParams';
 import type { GenericPagination } from '~/types';
 import { useQuery } from '@tanstack/vue-query';
 import { AreaServiceImpl } from '~/services/impl/AreaServiceImpl';
 
 export const useQueryAreaList = (
-    params: PaginationSearchParam,
+    params: AreaPaginationSearchParams,
     searchCount: MaybeRef<number>,
     options?: UseQueryOptions<GenericPagination<AreaListResponse[]>>,
 ) => {
@@ -25,8 +25,5 @@ export const useQueryAreaList = (
             params.setFirstPage();
         else query.refetch();
     };
-    const values = computed(() =>
-        results.value.map(result => result.code),
-    );
-    return { ...query, results, total, values, refetch };
+    return { ...query, results, total, refetch };
 };

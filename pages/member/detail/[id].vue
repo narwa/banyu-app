@@ -87,9 +87,10 @@ const handleDelete = handleArchiveConfirmation(async () => {
         <VCard title="Member Detil">
             <VGrid
                 type="cols"
-                sm="3"
-                gap="2"
-                class="grid-cols-3"
+                md="3"
+                sm="1"
+                gap="4"
+                class="md:grid-cols-3 sm:grid-cols-1"
             >
                 <VDescription
                     title="No Meter"
